@@ -100,7 +100,8 @@
   .hat::before{content:"^";position:absolute;left:0;right:0;top:-.5em;text-align:center;font-style:normal;font-size:.85em}
   .eq{font-size:17px;display:flex;align-items:center;gap:2px;color:var(--text)}
   .trio{width:42px;height:28px;flex:none;display:inline-block}
-  .gapbox{border-left:2px solid var(--gap);padding:2px 0 2px 10px;display:grid;gap:3px;font-size:16px;margin-top:4px}
+  .gapbox{border-left:2px solid var(--gap);padding:2px 0 2px 10px;display:grid;gap:3px;font-size:16px;margin-top:4px;border-radius:0 6px 6px 0;transition:background .18s ease}
+  .gapbox.pulse{background:rgba(255,176,87,.12)}
   .cap{font-size:12.5px;color:var(--muted);line-height:1.35}
   .cap .m{color:var(--text);font-size:15px}
   .big{font-size:22px;color:var(--text)}
@@ -255,6 +256,8 @@
             <text x="26" y="186" text-anchor="middle" font-size="12">per item</text>
             <path d="M37 160H56" stroke="rgba(176,193,224,.6)" stroke-width="1.4" marker-end="url(#ah)"/>
           </g>
+          <g id="gh1" opacity="0"><g transform="translate(4,-4)" style="color:var(--hu)"><use href="#hu" x="62" y="140" width="20" height="40"/><use href="#hu" x="86" y="140" width="20" height="40"/><use href="#hu" x="110" y="140" width="20" height="40"/><use href="#hu" x="186" y="140" width="20" height="40"/><use href="#hu" x="210" y="140" width="20" height="40"/><use href="#ai" x="234" y="140" width="20" height="40" style="color:var(--ai)"/></g></g>
+          <g id="gh2" opacity="0"><g transform="translate(8,-8)" style="color:var(--hu)"><use href="#hu" x="62" y="140" width="20" height="40"/><use href="#hu" x="86" y="140" width="20" height="40"/><use href="#hu" x="110" y="140" width="20" height="40"/><use href="#hu" x="186" y="140" width="20" height="40"/><use href="#ai" x="210" y="140" width="20" height="40" style="color:var(--ai)"/><use href="#hu" x="234" y="140" width="20" height="40"/></g></g>
           <g id="hg" style="color:var(--hu)">
             <use id="h0" href="#hu" x="62" y="140" width="20" height="40" opacity="0"/>
             <use id="h1" href="#hu" x="86" y="140" width="20" height="40" opacity="0"/>
@@ -284,33 +287,33 @@
         </svg>
       </div>
 
-      <div class="step s2" data-t="6700">
+      <div class="step s2" data-t="7900">
         <h3><i>2</i>Agreement &amp; Gap</h3>
         <p class="d">score agreement over all <i class="m">N</i> items, take the gap and budget</p>
-        <div class="eq slide" data-t="7500"><span class="m" style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trH" viewBox="0 0 46 30" style="color:var(--hu)"><use href="#hu" x="0" y="0" width="15" height="30"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
-        <div class="eq slide" data-t="8300"><span class="m" style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trM" viewBox="0 0 46 30"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
-        <div class="gapbox" id="gapbox" data-t="9200">
-          <div class="slide" data-t="9300"><span class="m"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> <span style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span> <b>−</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span></span></div>
-          <div class="slide" data-t="10200"><span class="m">ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> c <b>(1 −</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span><b>)</b></span></div>
-          <div class="slide" data-t="11100" id="adjLine"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span> <b>=</b> <span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>+</b> ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span></span></div>
+        <div class="eq slide" data-t="8700"><span class="m" style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trH" viewBox="0 0 46 30" style="color:var(--hu)"><use href="#hu" x="0" y="0" width="15" height="30"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
+        <div class="eq slide" data-t="9500"><span class="m" style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trM" viewBox="0 0 46 30"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
+        <div class="gapbox" id="gapbox" data-t="10400">
+          <div class="slide" data-t="10500"><span class="m"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> <span style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span> <b>−</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span></span></div>
+          <div class="slide" data-t="11400"><span class="m">ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> c <b>(1 −</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span><b>)</b></span></div>
+          <div class="slide" data-t="12300" id="adjLine"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span> <b>=</b> <span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>+</b> ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span></span></div>
         </div>
-        <div class="cap" style="margin-top:auto"><span data-t="11800">collect over the <i class="m">B</i> repetitions:&nbsp;</span> <span class="m" id="collectSet" data-t="12700"><b>{</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span></span></div>
+        <div class="cap" style="margin-top:auto"><span data-t="13000">collect over the <i class="m">B</i> repetitions:&nbsp;</span> <span class="m" id="collectSet" data-t="13900"><b>{</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span></span></div>
       </div>
 
-      <div class="step s3" data-t="14200">
+      <div class="step s3" data-t="14700">
         <h3><i>3</i>Near-Worst Gap</h3>
         <p class="d">order the <i class="m">B</i> adjusted gaps and take the <i class="m">α</i>-quantile</p>
         <svg class="draw hist" id="hist" viewBox="0 0 240 140" role="img" aria-label="Distribution of bootstrap gaps with the 5% quantile above zero"></svg>
-        <div class="cap slide" data-t="23000">only <i class="m">α</i> = 5% of the gaps are lower</div>
-        <div class="cap slide" data-t="23600">the decision statistic:&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>=</b> Q<span class="ss"><span>&nbsp;</span><span>α</span></span><b>({</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span><b>)</b></span></div>
+        <div class="cap slide" data-t="28700">only <i class="m">α</i> = 5% of the gaps are lower</div>
+        <div class="cap slide" data-t="29200">the decision statistic:&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>=</b> Q<span class="ss"><span>&nbsp;</span><span>α</span></span><b>({</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span><b>)</b></span></div>
       </div>
 
-      <div class="step s4" data-t="24600">
+      <div class="step s4" data-t="29500">
         <h3><i>4</i>Decision</h3>
         <p class="d">pass if the decision statistic stays above zero</p>
-        <div class="big slide" data-t="25300">if&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>&gt; 0</b></span></div>
-        <div class="cap slide" data-t="26000" style="color:#C9D7F0;font-size:14px">reject <span class="m">H<span class="ss"><span>&nbsp;</span><span>0</span></span><b>:</b> Δ <b>+</b> ε <b>≤ 0</b></span></div>
-        <div class="cap slide" data-t="26700">the gap stays inside the budget</div>
+        <div class="big slide" data-t="30100">if&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>&gt; 0</b></span></div>
+        <div class="cap slide" data-t="30700" style="color:#C9D7F0;font-size:14px">reject <span class="m">H<span class="ss"><span>&nbsp;</span><span>0</span></span><b>:</b> Δ <b>+</b> ε <b>≤ 0</b></span></div>
+        <div class="cap slide" data-t="31300">the gap stays inside the budget</div>
         <div class="verdict"><svg id="vr" viewBox="0 0 20 40" style="color:var(--ai)"><use href="#ai"/></svg><span id="vt">can replace</span><svg id="vh" viewBox="0 0 20 40" style="color:var(--hu)"><use href="#hu"/></svg><span id="vc" class="check">✓</span></div>
       </div>
     </div>
@@ -319,7 +322,6 @@
       <svg class="flyer" id="fH" viewBox="0 0 70 40" style="color:var(--hu)"><use href="#hu" x="0" y="0" width="20" height="40"/><use href="#hu" x="24" y="0" width="20" height="40" opacity=".65"/><use href="#hu" x="48" y="0" width="20" height="40" opacity=".4"/></svg>
       <svg class="flyer" id="fM" viewBox="0 0 70 40"><use href="#hu" x="0" y="0" width="20" height="40" style="color:var(--hu)"/><use href="#hu" x="24" y="0" width="20" height="40" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="48" y="0" width="20" height="40" style="color:var(--ai)"/></svg>
       <span class="flyer chip m" id="fC"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span></span>
-      <span class="flyer gdot" id="fG"></span>
     </div>
     <figcaption>For each of <i class="m">B</i> iterations, the test resamples <i class="m">N</i> items, draws <i class="m">k</i> = 3 human labels per item, swaps one for the LLM's label and scores both panels with Krippendorff's <i class="m">α</i>. The LLM passes when the <i class="m">α</i>-quantile of the margin-adjusted gaps is positive. Annotator identities are never used.</figcaption>
   </figure>
@@ -462,18 +464,36 @@
     return { src:src, pick: it<0 ? 5 : Math.floor(rnd()*8), ops:ops, r: it<0 ? 2 : Math.floor(rnd()*3) };
   }
   var first = draw(-1);
-  var ITER0 = 14600, ITERD = 700, NIT = 8;
-  var iters = []; for (var k=0;k<NIT;k++) iters.push(draw(k));
-
+  var EXTRA = [11,12,13].map(function(s){ var x = draw(-1); seed = s*7; return {pick:Math.floor(rnd()*8), ops:[1,.65,.4].map(function(o){ return [o,rnd()]; }).sort(function(a,b){ return a[1]-b[1]; }).map(function(a){ return a[0]; }), r:Math.floor(rnd()*3)}; });
+  var GH = [$('gh1'), $('gh2')];
   function placeCurve(px,py){ curve.setAttribute('d','M'+px+' '+(py+8)+'C'+(px-26)+' 100 70 104 36 140'); curveLen = curve.getTotalLength(); curve.setAttribute('stroke-dasharray', curveLen); }
 
+  /* ---------- bootstrap rounds: one clock drives steps 1, 2 and 3 ----------
+     round 0 is the walked-through draw; rounds 1..3 run slowly, the rest fast.
+     every round ends by sending its adjusted gap to step 3, where it lands as one dot. */
+  var n = 56, SLOW = 3, SD = 1400, FD = 110, R1 = 15700;
+  var rounds = [{T:0, slow:true, land0:15000, land1:15600, d:first}];
+  for (var k=1;k<n;k++){
+    var slow = k<=SLOW, T = slow ? R1+(k-1)*SD : R1+SLOW*SD+(k-1-SLOW)*FD;
+    rounds.push({T:T, slow:slow, land0: slow ? T+1100 : T+30, land1: slow ? T+1400 : T+430, d:draw(k)});
+  }
+  var ROUNDS_END = rounds[n-1].T + FD;
+  function roundAt(t){ if (t < R1) return 0; for (var k=n-1;k>=1;k--) if (t >= rounds[k].T) return k; return 0; }
+
   function panel1(t){
-    var d = first, base = 1400, step = 160, flyD = 450, curA = 3100, curB = 3700, hum0 = 3900, cpA = 5100, cpB = 5800, swA = 5900, swB = 6300;
-    var k = -1;
-    if (t >= ITER0 && t < ITER0+ITERD*NIT){ k = Math.floor((t-ITER0)/ITERD); d = iters[k]; var T = ITER0+k*ITERD;
-      base = T; step = 22; flyD = 220; curA = T+200; curB = T+420; hum0 = -1e9; cpA = -1e9; cpB = -1e9; swA = T+420; swB = T+620; }
-    else if (t >= ITER0+ITERD*NIT){ d = iters[NIT-1]; base = curA = curB = hum0 = cpA = cpB = swA = swB = -1e9; }
-    /* dots fly from the pool into the sample ellipse */
+    var k = roundAt(t), r = rounds[k], d = r.d;
+    var base = 1400, step = 160, flyD = 450, curA = 3100, curB = 3700, hum0 = 3900, cpA = 5100, cpB = 5800, swA = 5900, swB = 6300;
+    if (k === 0 && t >= 6300){
+      /* for each item: the ring moves to the next sampled item and builds its own pair of panels */
+      var e = Math.min(EXTRA.length-1, Math.floor((t-6300)/400)), T0 = 6300+e*400;
+      d = {src:first.src, pick:EXTRA[e].pick, ops:EXTRA[e].ops, r:EXTRA[e].r};
+      base = -1e9; curA = T0; curB = T0+220; hum0 = -1e9; cpA = cpB = -1e9; swA = T0+220; swB = T0+380;
+    }
+    if (k >= 1){
+      if (r.slow){ var T = r.T; base = T; step = 30; flyD = 300; curA = T+350; curB = T+600; hum0 = -1e9; cpA = cpB = -1e9; swA = T+600; swB = T+800; }
+      else { base = curA = curB = hum0 = cpA = cpB = swA = swB = -1e9; }
+    }
+    /* dots fly from the pool into the sample ellipse, with replacement */
     sdots.forEach(function(c,i){
       var a = d.src[i], p = ease(prog(t, base+i*step, base+i*step+flyD));
       c.setAttribute('cx', lerp(dotsD[a][0], slotS[i][0], p).toFixed(1));
@@ -483,18 +503,15 @@
     var px = slotS[d.pick][0], py = slotS[d.pick][1];
     sel.setAttribute('cx',px); sel.setAttribute('cy',py); sel.setAttribute('opacity', t >= curA-100 ? 1 : 0);
     placeCurve(px,py);
-    /* the chosen item travels down the arrow */
     var pc = ease(prog(t, curA, curB));
     curve.setAttribute('stroke-dashoffset', (curveLen*(1-pc)).toFixed(1));
     curve.setAttribute('marker-end', pc >= 1 ? 'url(#ah)' : '');
     if (pc > 0 && pc < 1){ var pt = curve.getPointAtLength(curveLen*pc); trav.setAttribute('cx',pt.x); trav.setAttribute('cy',pt.y); trav.setAttribute('opacity',1); } else trav.setAttribute('opacity',0);
     item.setAttribute('opacity', pc >= 1 ? 1 : 0);
-    /* three human labels step in, one at a time */
     H.forEach(function(h,i){
-      var p = k>=0 || t>=ITER0 ? 1 : back(prog(t, hum0+i*250, hum0+i*250+420));
+      var p = (k >= 1 || t >= 6300) ? 1 : back(prog(t, hum0+i*250, hum0+i*250+420));
       h.setAttribute('x', (HX[i] - (1-p)*16).toFixed(1)); h.setAttribute('opacity', (d.ops[i]*clamp(p*1.4)).toFixed(2));
     });
-    /* copy them across the swap arrow */
     var ps = ease(prog(t, 4800, 5200)); swapA.setAttribute('stroke-dashoffset', (swapLen*(1-ps)).toFixed(1)); swapA.setAttribute('marker-end', ps>=1?'url(#ah)':'');
     var pm = ease(prog(t, cpA, cpB)), q = ease(prog(t, swA, swB));
     M.forEach(function(m,i){
@@ -504,12 +521,13 @@
       var o = t < cpA ? 0 : d.ops[i]; if (isR) o = o*(1-q);
       m.setAttribute('opacity', o.toFixed(2));
     });
-    /* the LLM drops into the swapped slot */
+    var nStack = k >= 1 ? 2 : (t < 6300 ? 0 : Math.min(2, 1+Math.floor((t-6300)/400)));
+    GH.forEach(function(g,i){ g.setAttribute('opacity', i < nStack ? .32 - i*.1 : 0); });
     rb.setAttribute('x', MX[d.r]); rb.setAttribute('y', (140 - (1-back(q))*26).toFixed(1)); rb.setAttribute('opacity', q.toFixed(2));
   }
 
-  /* ---------- panel 3: bootstrap gaps (illustrative shape, evenly spaced normal quantiles) ---------- */
-  var n = 56, mu = .035, sd = .018;
+  /* ---------- step 3: one dot per bootstrap round (illustrative shape: evenly spaced normal quantiles) ---------- */
+  var mu = .035, sd = .018;
   function qn(p){ return 4.91*(Math.pow(p,.14)-Math.pow(1-p,.14)); }
   var vals = []; for (var i=0;i<n;i++) vals.push(mu + sd*qn((i+.5)/n));
   var qstar = vals[Math.floor(.05*n)-1];
@@ -519,7 +537,7 @@
   function xs(v){ return X0 + (v-lo)/(hi-lo)*(X1-X0); }
   var bins = {}, pos = [];
   order.forEach(function(idx,k){ var v=vals[idx]; var b=Math.floor((v-lo)/bw); bins[b]=(bins[b]||0)+1;
-    pos.push({v:v, x:xs(lo+(b+.5)*bw), y:Y-4-(bins[b]-1)*dy, t:ITER0+300+Math.floor(k/7)*ITERD+(k%7)*70}); });
+    pos.push({v:v, x:xs(lo+(b+.5)*bw), y:Y-4-(bins[b]-1)*dy, t:rounds[k].land1}); });
   function pdf(v){ return Math.exp(-Math.pow((v-mu)/sd,2)/2)/(sd*Math.sqrt(2*Math.PI)); }
   var sc = n*bw*dy, path='', tail='';
   for (var i=0;i<=80;i++){ var v=lo+(hi-lo)*i/80, x=xs(v), y=Y-pdf(v)*sc; path += (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); if (v<=qstar) tail += (tail?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); }
@@ -534,16 +552,17 @@
     '<line id="qline" x1="'+xq+'" y1="'+Y+'" x2="'+xq+'" y2="'+Y+'" stroke="var(--gap)" stroke-width="1.6"/>'+
     '<text id="qlab" x="'+xq+'" y="28" text-anchor="middle" font-size="14" font-family="STIX Two Text,serif" font-style="italic" style="fill:var(--gap)" opacity="0">q<tspan dy="-6" font-size="10">*</tspan><tspan dx="-5" dy="10" font-size="10">α</tspan></text>'+
     '<text x="'+X1+'" y="'+(Y+17)+'" text-anchor="end" font-size="13" font-family="STIX Two Text,serif" font-style="italic">Δ<tspan dy="4" font-size="10">adj</tspan></text>';
-  var hd = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','3'); c.setAttribute('cx',p.x.toFixed(1)); $('hdots').appendChild(c); return c; });
+  var hd = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','3'); c.setAttribute('cx',p.x.toFixed(1)); c.setAttribute('cy',p.y); $('hdots').appendChild(c); return c; });
   var hcurve = $('hcurve'), hlen = hcurve.getTotalLength(); hcurve.setAttribute('stroke-dasharray', hlen);
+  var CURVE0 = ROUNDS_END+300;
   function panel3(t){
-    hd.forEach(function(c,i){ var p = pos[i], f = prog(t, p.t, p.t+380), e = f*f;
-      c.setAttribute('cy', (lerp(-6, p.y, e)).toFixed(1)); c.setAttribute('opacity', t < p.t ? 0 : .9);
-      c.setAttribute('fill', (p.v <= qstar && t >= 21800) ? 'var(--gap)' : 'var(--hu)'); });
-    hcurve.setAttribute('stroke-dashoffset', (hlen*(1-ease(prog(t,20600,21600)))).toFixed(1));
-    $('htail').setAttribute('opacity', ease(prog(t,21800,22300)).toFixed(2));
-    $('qline').setAttribute('y2', lerp(Y, 34, ease(prog(t,22200,22800))).toFixed(1));
-    $('qlab').setAttribute('opacity', ease(prog(t,22700,23000)).toFixed(2));
+    hd.forEach(function(c,i){ var p = pos[i], on = t >= p.t, pop = back(prog(t, p.t, p.t+220));
+      c.setAttribute('opacity', on ? .9 : 0); c.setAttribute('r', on ? (3*Math.max(pop,.4)).toFixed(2) : 3);
+      c.setAttribute('fill', (p.v <= qstar && t >= CURVE0+1300) ? 'var(--gap)' : 'var(--hu)'); });
+    hcurve.setAttribute('stroke-dashoffset', (hlen*(1-ease(prog(t,CURVE0,CURVE0+900)))).toFixed(1));
+    $('htail').setAttribute('opacity', ease(prog(t,CURVE0+1300,CURVE0+1800)).toFixed(2));
+    $('qline').setAttribute('y2', lerp(Y, 34, ease(prog(t,CURVE0+1600,CURVE0+2200))).toFixed(1));
+    $('qlab').setAttribute('opacity', ease(prog(t,CURVE0+2100,CURVE0+2400)).toFixed(2));
   }
 
   /* ---------- cross-panel flights (measured live, so they work in every layout) ---------- */
@@ -555,37 +574,50 @@
     el.style.opacity = 1; el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)'; el.style.width = w.toFixed(1)+'px'; el.style.height = h.toFixed(1)+'px';
   }
   function boxOf(use0, use2){ var a = rel(use0), c = rel(use2); return {x:a.x, y:a.y, w:c.x+c.w-a.x, h:a.h}; }
+  var pool = []; for (var i=0;i<6;i++){ var g=document.createElement('span'); g.className='flyer gdot'; fig.querySelector('.flyers').appendChild(g); pool.push(g); }
+  var gapbox = $('gapbox');
   function flights(t){
-    var pH = prog(t,6900,7600), pM = prog(t,7700,8400);
-    fly($('fH'), boxOf(H[0],H[2]), rel($('trH')), pH, 40);
-    fly($('fM'), boxOf(M[0],M[2]), rel($('trM')), pM, 40);
-    $('trH').style.opacity = t >= 7600 ? 1 : 0; $('trM').style.opacity = t >= 8400 ? 1 : 0;
-    var c = $('fC'), adj = rel($('adjLine')), set = rel($('collectSet'));
-    fly(c, {x:adj.x, y:adj.y, w:60, h:26}, {x:set.x, y:set.y, w:60, h:26}, prog(t,11900,12700), 18);
-    /* each iteration sends its adjusted gap on to step 3 */
-    var g = $('fG'), k = Math.floor((t-ITER0)/ITERD);
-    if (t >= ITER0 && k < NIT){ var T = ITER0+k*ITERD, hs = rel($('hist'));
-      fly(g, {x:adj.x+12, y:adj.y+6, w:8, h:8}, {x:hs.x+hs.w*.5, y:hs.y+hs.h*.35, w:8, h:8}, prog(t, T+300, T+680), 50); }
-    else g.style.opacity = 0;
+    var k = roundAt(t), r = rounds[k];
+    /* the two panels fly into step 2: walked-through round, then again each slow round */
+    var pH = prog(t,8100,8800), pM = prog(t,8900,9600);
+    if (k >= 1 && r.slow){ pH = prog(t, r.T+800, r.T+1100); pM = prog(t, r.T+850, r.T+1150); }
+    fly($('fH'), boxOf(H[0],H[2]), rel($('trH')), pH, 34);
+    fly($('fM'), boxOf(M[0],M[2]), rel($('trM')), pM, 34);
+    $('trH').style.opacity = (t >= 8800 && !(pH > 0 && pH < 1)) ? 1 : 0;
+    $('trM').style.opacity = (t >= 9600 && !(pM > 0 && pM < 1)) ? 1 : 0;
+    var adj = rel($('adjLine')), set = rel($('collectSet'));
+    fly($('fC'), {x:adj.x, y:adj.y, w:60, h:26}, {x:set.x, y:set.y, w:60, h:26}, prog(t,13100,13900), 18);
+    /* step 2 re-scores each round */
+    var busy = false;
+    if (k >= 1) busy = r.slow ? (t >= r.T+1000 && t < r.T+1250) : (t - r.T < 70);
+    gapbox.classList.toggle('pulse', busy);
+    /* every round's adjusted gap flies to the dot it becomes in step 3 */
+    var hs = rel($('hist')), s = hs.w/240, used = 0;
+    pool.forEach(function(g){ g.style.opacity = 0; });
+    for (var j = Math.max(0,k-5); j <= Math.min(n-1,k+1) && used < pool.length; j++){
+      var rj = rounds[j], p = prog(t, rj.land0, rj.land1);
+      if (p > 0 && p < 1){ var dp = pos[j];
+        fly(pool[used++], {x:adj.x+14, y:adj.y+6, w:8, h:8}, {x:hs.x+dp.x*s-4, y:hs.y+dp.y*s-4, w:8, h:8}, p, rj.slow ? 46 : 30); }
+    }
   }
 
   function panel4(t){
-    var p = back(prog(t,27300,28100));
+    var p = back(prog(t,31700,32500));
     $('vr').style.transform = 'translateX('+((1-p)*-60).toFixed(1)+'px)'; $('vr').style.opacity = clamp(p*1.5);
     $('vh').style.transform = 'translateX('+((1-p)*60).toFixed(1)+'px)'; $('vh').style.opacity = clamp(p*1.5);
-    $('vt').style.opacity = ease(prog(t,28000,28400));
-    var c = back(prog(t,28300,28800)); $('vc').style.transform = 'scale('+c.toFixed(2)+')'; $('vc').style.opacity = clamp(c);
+    $('vt').style.opacity = ease(prog(t,32400,32800));
+    var c = back(prog(t,32700,33200)); $('vc').style.transform = 'scale('+c.toFixed(2)+')'; $('vc').style.opacity = clamp(c);
   }
 
   var loopEl = $('loop');
   var items = [].slice.call(fig.querySelectorAll('[data-t]'));
   var steps = [].slice.call(fig.querySelectorAll('.step'));
-  var STARTS = [0,6700,14200,24600], END = 33500;
+  var STARTS = [0,7900,14700,29500], END = 37000;
   var bar = $('bar');
   var t = reduce ? END-1 : 0, last = null;
   function render(){
     for (var i=0;i<items.length;i++) items[i].classList.toggle('on', t>=+items[i].dataset.t);
-    var lp = ease(prog(t,12900,13800)); loopEl.style.clipPath = 'inset(-20px '+((1-lp)*100).toFixed(1)+'% -4px -8px)';
+    var lp = ease(prog(t,14100,15000)); loopEl.style.clipPath = 'inset(-20px '+((1-lp)*100).toFixed(1)+'% -4px -8px)';
     bar.style.width = (t/END*100)+'%';
     var st = STARTS.filter(function(s){ return t>=s; }).length-1;
     steps.forEach(function(s,i){ s.classList.toggle('cur', i===st); });
