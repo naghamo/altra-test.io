@@ -547,8 +547,9 @@
     if (clearing && R.items.length && t < R.items[0].t0){
       var f = 1-prog(t,R.clear[0],R.clear[1]); var pit = prev.items[prev.items.length-1], pv = VAR[pit.v];
       drawRow(pit, pv, 1e9, f); return; }
-    if (!it){ if (ri === 0 && t < 3000){ sel.setAttribute('opacity',0); trav.setAttribute('opacity',0); curve.setAttribute('stroke-dashoffset',curveLen); curve.setAttribute('marker-end',''); setRow(); swapA.setAttribute('stroke-dashoffset',swapLen); return; }
-      sel.setAttribute('opacity',0); trav.setAttribute('opacity',0); setRow(); return; }
+    if (!it){ sel.setAttribute('opacity',0); trav.setAttribute('opacity',0); curve.setAttribute('opacity',0); curve.setAttribute('marker-end','');
+      if (ri === 0) swapA.setAttribute('stroke-dashoffset',swapLen);
+      setRow(); return; }
     drawRow(it, VAR[it.v], t, 1);
   }
   function drawRow(it, v, t, fade){
