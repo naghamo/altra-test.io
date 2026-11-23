@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AltRA-Test: An Alternative Annotator Test for LLM Judges Without Shared Annotators</title>
+<meta name="description" content="AltRA-Test: a statistical test for replacing human annotators with LLM judges when items are not all labeled by the same annotators.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227.5%22%20fill%3D%22%231B3051%22/%3E%3Cpath%20d%3D%22M8.5%2025%2016%207%22%20stroke%3D%22%238EC1F5%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M16%207%2023.5%2025%22%20stroke%3D%22%23F2568F%22%20stroke-width%3D%223.6%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M11.4%2018.6h9.2%22%20stroke%3D%22%235FD07A%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="theme-color" content="#1B3051">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=STIX+Two+Text:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#1B3051;
+    --card:#24406B;
+    --card-hi:#2C4C7E;
+    --line:rgba(176,193,224,.20);
+    --text:#EDF2FA;
+    --muted:#A6B9DA;
+    --accent:#F2568F;
+    /* one color per role, lifted for navy: humans blue, LLM pink, gap amber, pass green */
+    --hu:#8EC1F5;
+    --ai:#F2568F;
+    --gap:#FFB057;
+    --ok:#5FD07A;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:inherit}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg-deep);color:var(--text);
+    font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:700px;margin:0 auto;padding:34px 20px 60px;position:relative;z-index:1}
+
+  /* background: the item pool as a faint dot field, with soft lights in the role colors */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(rgba(198,213,239,.16) 1px,transparent 1.6px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(120% 80% at 50% 0%,#000 30%,transparent 78%);
+    mask-image:radial-gradient(120% 80% at 50% 0%,#000 30%,transparent 78%)}
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(520px 340px at 88% -4%,rgba(242,86,143,.13),transparent 70%),
+      radial-gradient(620px 420px at 6% 22%,rgba(142,193,245,.10),transparent 72%),
+      radial-gradient(700px 460px at 50% 104%,rgba(95,208,122,.07),transparent 72%)}
+
+  .venue{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);margin-bottom:20px}
+  .venue b{color:var(--text);font-weight:600}
+  .venue .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+  h1{font-size:clamp(30px,7vw,42px);line-height:1.1;letter-spacing:-.022em;font-weight:600;margin:0;text-wrap:balance}
+  h1 .w-ai,h1 .w-hu{transition:color .28s ease}
+  h1:hover .w-ai,h1:focus-within .w-ai{color:var(--ai)}
+  h1:hover .w-hu,h1:focus-within .w-hu{color:var(--hu)}
+  h1 .sub{display:block;font-weight:400;color:#C5D4EE;font-size:.56em;line-height:1.28;margin-top:9px;letter-spacing:-.01em}
+  .byline{color:var(--muted);font-size:14px;margin:14px 0 0}
+
+  .tldr{color:#C9D7F0;font-size:15.5px;margin:26px 0 0;max-width:64ch}
+  .tldr b{color:var(--text);font-weight:600}
+
+  .masthead{display:flex;align-items:flex-start;gap:26px}
+  .titleblock{flex:1 1 auto;min-width:0}
+  .primary{display:flex;gap:20px;margin:6px 0 0;flex:none}
+  .plink{--ty:0px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:2px;
+    color:var(--accent);text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;
+    transform:translateY(var(--ty));transition:transform .18s cubic-bezier(.2,.8,.3,1),opacity .18s ease}
+  .plink:hover,.plink:focus-visible{--ty:-2px;opacity:.78}
+  .plink:active{--ty:1px}
+  .plink .ico{flex:none;width:26px;height:26px;color:var(--accent);display:grid;place-items:center;transition:transform .22s cubic-bezier(.2,.8,.3,1)}
+  .plink:hover .ico,.plink:focus-visible .ico{transform:scale(1.08)}
+  .plink .ico svg{width:24px;height:24px;display:block}
+  .plink .ico img{width:25px;height:25px;display:block}
+  .plink .t{font-weight:500;font-size:13.5px;line-height:1.25;display:block;letter-spacing:.005em;color:var(--muted)}
+
+
+  /* ---------- method illustration ---------- */
+  .proc{margin:34px 0 0;position:relative;width:min(1180px,calc(100vw - 40px));left:50%;transform:translateX(-50%)}
+  .steps{display:grid;grid-template-columns:minmax(0,1.32fr) repeat(3,minmax(0,1fr));gap:0;position:relative}
+  .loop{grid-column:1/3;position:relative;height:30px;margin:0 22% 6px 4%;border:1px dashed rgba(176,193,224,.45);border-bottom:0;border-radius:8px 8px 0 0;top:8px}
+  .loop::after{content:"";position:absolute;left:-5px;bottom:-3px;border:4.5px solid transparent;border-top:7px solid rgba(176,193,224,.6)}
+  .loop span{position:absolute;left:50%;top:-11px;transform:translateX(-50%);background:var(--bg-deep);padding:0 8px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .loopsp{grid-column:3/5}
+  .step{padding:12px 16px 16px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+  .step+.step{border-left:1px solid var(--line)}
+  .step h3{margin:0;font-size:13px;font-weight:600;color:#C2D1EC;letter-spacing:.01em;display:flex;align-items:baseline;gap:7px;transition:color .3s ease}
+  .step h3 i{font-style:normal;font-weight:500;color:var(--muted);font-size:12px}
+  .step.cur h3{color:var(--c)}
+  .step p.d{margin:0;font-size:12.5px;color:var(--muted);line-height:1.35}
+  .s1{--c:var(--ai)}.s2{--c:var(--gap)}.s3{--c:var(--gap)}.s4{--c:var(--ok)}
+  .step svg.draw{width:100%;height:auto;display:block;overflow:visible}
+  .step svg text{font-family:"IBM Plex Sans",sans-serif;fill:var(--muted)}
+  .m{font-family:"STIX Two Text",Georgia,serif;font-style:italic;white-space:nowrap}
+  .m b{font-style:normal;font-weight:400}
+  .ss{display:inline-flex;flex-direction:column;font-size:.68em;line-height:1.05;vertical-align:.42em;margin-left:1px}
+  .hat{position:relative;display:inline-block}
+  .hat::before{content:"^";position:absolute;left:0;right:0;top:-.5em;text-align:center;font-style:normal;font-size:.85em}
+  .eq{font-size:17px;display:flex;align-items:center;gap:2px;color:var(--text)}
+  .trio{width:42px;height:28px;flex:none;display:inline-block}
+  .gapbox{border-left:2px solid var(--gap);padding:2px 0 2px 10px;display:grid;gap:3px;font-size:16px;margin-top:4px}
+  .cap{font-size:12.5px;color:var(--muted);line-height:1.35}
+  .cap .m{color:var(--text);font-size:15px}
+  .big{font-size:22px;color:var(--text)}
+  .verdict{margin-top:8px;display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ok);font-size:14px}
+  .verdict svg{width:20px;height:40px;flex:none}
+  [data-t]{opacity:0;transform:translateY(7px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.9,.3,1.2)}
+  [data-t].slide{transform:translateX(-14px)}
+  svg [data-t]{transform-box:fill-box}
+  [data-t].on{opacity:1;transform:none}
+  .flyers{position:absolute;inset:0;pointer-events:none}
+  .flyer{position:absolute;left:0;top:0;opacity:0;display:block;will-change:transform}
+  .chip{color:var(--gap);font-size:16px;display:grid;place-items:center;background:rgba(15,32,56,.85);border:1px solid rgba(255,176,87,.5);border-radius:7px}
+  .gdot{border-radius:50%;background:var(--gap);box-shadow:0 0 10px rgba(255,176,87,.7)}
+  .check{display:inline-block;color:var(--ok);font-size:18px}
+  .trio{transition:opacity .2s ease}
+  .playbar{height:2px;background:var(--line);border-radius:2px;margin:10px 0 0;position:relative;overflow:visible}
+  .playbar i{position:absolute;left:0;top:0;height:2px;width:0;background:linear-gradient(90deg,var(--ai),var(--gap) 55%,var(--ok));border-radius:2px}
+  .playbar i::after{content:"";position:absolute;right:-3px;top:-2px;width:6px;height:6px;border-radius:50%;background:#fff}
+  .proc figcaption{color:var(--muted);font-size:13px;line-height:1.45;margin:14px auto 0;max-width:660px}
+
+  /* ---------- authors ---------- */
+  h2{font-size:14px;font-weight:600;color:var(--muted);margin:44px 0 4px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .people{margin-top:20px;padding-bottom:144px;transition:padding-bottom .32s cubic-bezier(.2,.8,.3,1)}
+  @supports selector(:has(*)){
+    .people{padding-bottom:0}
+    .people:has(.person.hasbio:hover),.people:has(.person.hasbio:focus-within){padding-bottom:144px}
+  }
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 14px;position:relative}
+  .person{display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;outline:none;padding:12px 6px;border:1px solid transparent;border-radius:14px;
+    transition:margin .22s cubic-bezier(.2,.8,.3,1),background .25s ease,border-color .25s ease}
+  .person:hover,.person:focus-within{margin-top:-4px;margin-bottom:4px;background:rgba(198,213,239,.05);border-color:var(--line)}
+  .person:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  .meta{min-width:0;width:100%}
+  .name{font-size:15.5px;font-weight:600;letter-spacing:-.012em;line-height:1.3;transition:color .2s ease}
+  .person:hover .name,.person:focus-within .name{color:#fff}
+  .role{color:#A6B9DA;font-size:12.5px;margin-top:5px;line-height:1.4}
+  .bio{position:absolute;top:100%;left:0;right:0;margin:18px auto 0;max-width:60ch;color:var(--muted);font-size:13.5px;line-height:1.5;text-align:center;
+    opacity:0;transform:translateY(9px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
+  .person:hover .bio,.person:focus-within .bio{opacity:1;transform:none;transition:opacity .55s ease .22s,transform .6s cubic-bezier(.2,.8,.3,1) .22s}
+  .links{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin-top:11px}
+  .links a{display:grid;place-items:center;color:#C6D5EF;text-decoration:none;transition:color .16s ease,transform .16s ease}
+  .links a:hover,.links a:focus-visible{color:var(--accent);transform:translateY(-2px)}
+  .links svg{width:19px;height:19px;flex:none;display:block;transition:transform .2s cubic-bezier(.2,.8,.3,1)}
+  .links a:hover svg{transform:scale(1.14)}
+  .pic{order:-1;position:relative;line-height:0}
+  .avatar{flex:none;width:104px;height:104px;border-radius:50%;overflow:hidden;position:relative;background:var(--card-hi);border:3px solid var(--accent);transition:box-shadow .25s ease}
+  .person:hover .avatar,.person:focus-within .avatar{box-shadow:0 0 0 6px rgba(242,86,143,.14),0 10px 26px rgba(0,0,0,.35)}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.2,.8,.3,1)}
+  .person:hover .avatar img{transform:scale(1.05)}
+  .avatar .initials{position:absolute;inset:0;display:grid;place-items:center;font-size:25px;font-weight:600;color:#9FB4DC}
+
+  footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px;display:flex;align-items:center;gap:16px}
+  footer p{margin:0;line-height:1.45}
+  .crest{height:52px;width:auto;flex:none;opacity:.92}
+  a:focus-visible,.plink:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .venue{animation:fade-up .55s ease both .04s}
+  h1{animation:fade-up .6s ease both .12s}
+  .byline{animation:fade-up .55s ease both .22s}
+  .tldr{animation:fade-up .55s ease both .58s}
+  .primary .plink:nth-child(1){animation:fade-up .5s ease both .34s}
+  .primary .plink:nth-child(2){animation:fade-up .5s ease both .42s}
+  .primary .plink:nth-child(3){animation:fade-up .5s ease both .50s}
+  .js .reveal{opacity:0;transform:translateY(14px)}
+  .js .reveal.in{opacity:1;transform:none;transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.3,1)}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    .js .reveal{opacity:1;transform:none}
+    .plink{transform:none}
+  }
+  @media (max-width:640px){
+    .masthead{flex-direction:column;gap:16px}
+    .primary{margin:2px 0 0}
+  }
+  @media (max-width:980px){
+    .steps{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .loop{margin:0 30% 6px 6%}
+    .loopsp{display:none}
+    .step.s3{border-left:0}
+    .step.s3,.step.s4{border-top:1px solid var(--line)}
+  }
+  @media (max-width:560px){
+    .people:has(.person.hasbio:hover),.people:has(.person.hasbio:focus-within){padding-bottom:236px}
+    .steps{grid-template-columns:minmax(0,1fr)}
+    .loop{grid-column:1;margin:0 34% 6px 6%}
+    .step+.step{border-left:0;border-top:1px solid var(--line)}
+    .grid{grid-template-columns:repeat(2,1fr);gap:26px 12px}
+    .avatar{width:92px;height:92px;border-width:2.5px}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=" js";</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="hu" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10" cy="6" r="5"/><path d="M10 11V26M2 17H18M10 26 3.5 38M10 26 16.5 38"/></g></symbol>
+  <symbol id="ai" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 3V0.8"/><rect x="2.5" y="3" width="15" height="11" rx="2" fill="rgba(242,86,143,.18)"/><path d="M10 14V26M2 18H18M10 26 3.5 38M10 26 16.5 38M7 11H13"/></g><circle cx="7" cy="7.6" r="1.4" fill="currentColor"/><circle cx="13" cy="7.6" r="1.4" fill="currentColor"/></symbol>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(176,193,224,.7)"/></marker>
+</defs></svg>
+<div class="wrap">
+
+  <div class="venue"><span class="dot"></span> <b>arXiv 2611.26073</b> Preprint · 2026</div>
+
+  <div class="masthead">
+    <div class="titleblock">
+      <h1>AltRA-Test
+        <span class="sub">An Alternative Annotator Test for <span class="w-ai">LLM Judges</span> Without Shared <span class="w-hu">Annotators</span></span>
+      </h1>
+      <p class="byline">Nagham Omar · Rotem Dror · Almog Gueta · Avigdor Gal · Roi Reichart · Nitay Calderon</p>
+    </div>
+    <div class="primary">
+      <a class="plink" href="https://arxiv.org/abs/2611.26073" aria-label="Read the paper" title="Read the paper">
+        <span class="ico" aria-hidden="true"><img src="data:image/png;base64,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" alt=""></span><span class="t">Paper</span>
+      </a>
+      <a class="plink" href="https://huggingface.co/datasets/naghamo/altra-test" aria-label="Get the data" title="Get the data">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"> <circle cx="12" cy="9.6" r="6.7"/> <g fill="#1B3051"> <path d="M9.0 8.1c.75 0 1.35.62 1.35 1.38H7.65c0-.76.6-1.38 1.35-1.38z"/> <path d="M15.0 8.1c.75 0 1.35.62 1.35 1.38h-2.7c0-.76.6-1.38 1.35-1.38z"/> <path d="M12 13.9c-1.6 0-2.95-.92-3.4-2.2-.1-.3.12-.6.44-.6h5.92c.32 0 .54.3.44.6-.45 1.28-1.8 2.2-3.4 2.2z"/> </g> <g transform="rotate(-24 5.9 16.6)"> <rect x="3.3" y="12.9" width="5.2" height="7.4" rx="2.5"/> <path d="M4.9 13.7v5.8M6.6 13.7v5.8" stroke="#1B3051" stroke-width=".72" stroke-linecap="round"/> </g> <g transform="rotate(24 18.1 16.6)"> <rect x="15.5" y="12.9" width="5.2" height="7.4" rx="2.5"/> <path d="M17.1 13.7v5.8M18.8 13.7v5.8" stroke="#1B3051" stroke-width=".72" stroke-linecap="round"/> </g> </svg></span><span class="t">Data</span>
+      </a>
+    </div>
+  </div>
+
+
+  <p class="tldr">Tests that decide whether an LLM can replace a human annotator need the same annotators to label every item, which crowdsourced and preference data rarely have. <b>AltRA-Test</b> resamples labels inside each item, swaps one for the LLM's, and asks whether the mixed panel's agreement stays within a budget set by the humans' own disagreement. It is a consistent test of asymptotic level α. Across 18 LLMs and 20 text, image, audio and video datasets, judges pass in 95 of 201 pairs with their best prompt, and about 100 items often suffice.</p>
+
+  <figure class="proc" id="proc" aria-label="How AltRA-Test works">
+    <div class="steps">
+      <div class="loop" id="loop"><span>×<i class="m">B</i> iterations</span></div>
+      <div class="loopsp"></div>
+
+      <div class="step s1">
+        <h3><i>1</i>Sample &amp; Swap</h3>
+        <p class="d">draw <i class="m">N</i> items, then swap one label for the LLM's</p>
+        <svg class="draw" id="p1" viewBox="0 0 290 236" role="img" aria-label="Items are resampled; per item, three human labels are drawn and one is swapped for the LLM label">
+          <g data-t="300">
+            <ellipse cx="44" cy="40" rx="36" ry="24" fill="none" stroke="rgba(176,193,224,.55)" stroke-width="1.4"/>
+            <g id="dD"></g>
+            <text x="44" y="82" text-anchor="middle" font-size="12.5"><tspan font-style="italic" font-family="STIX Two Text,serif">𝒟</tspan>: all items</text>
+          </g>
+          <g data-t="1100">
+            <path d="M84 40H112" stroke="rgba(176,193,224,.6)" stroke-width="1.4" marker-end="url(#ah)"/>
+            <ellipse cx="156" cy="40" rx="38" ry="24" fill="none" stroke="var(--ai)" stroke-width="1.6"/>
+            <text x="202" y="28" font-size="12.5"><tspan font-style="italic" font-family="STIX Two Text,serif">N</tspan> items,</text>
+            <text x="202" y="43" font-size="12.5">with</text>
+            <text x="202" y="58" font-size="12.5">replacement</text>
+          </g>
+          <g id="dS"></g>
+          <circle id="sel" r="7" fill="none" stroke="var(--ai)" stroke-width="1.6" opacity="0"/>
+          <path id="curve" d="M156 56C130 100 70 104 36 140" fill="none" stroke="rgba(176,193,224,.6)" stroke-width="1.4"/>
+          <circle id="trav" r="3.6" fill="var(--ai)" opacity="0"/>
+          <g id="item" opacity="0"><circle cx="26" cy="160" r="7" fill="none" stroke="var(--ai)" stroke-width="1.6"/><circle cx="26" cy="160" r="3.6" fill="var(--ai)"/></g>
+          <g data-t="3750">
+            <text x="26" y="186" text-anchor="middle" font-size="12">per item</text>
+            <path d="M37 160H56" stroke="rgba(176,193,224,.6)" stroke-width="1.4" marker-end="url(#ah)"/>
+          </g>
+          <g id="hg" style="color:var(--hu)">
+            <use id="h0" href="#hu" x="62" y="140" width="20" height="40" opacity="0"/>
+            <use id="h1" href="#hu" x="86" y="140" width="20" height="40" opacity="0"/>
+            <use id="h2" href="#hu" x="110" y="140" width="20" height="40" opacity="0"/>
+          </g>
+          <g data-t="4600">
+            <text x="96" y="200" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--hu)">human-only</text>
+            <text x="96" y="215" text-anchor="middle" font-size="12">sample <tspan font-style="italic" font-family="STIX Two Text,serif">k</tspan> = 3</text>
+            <text x="96" y="229" text-anchor="middle" font-size="12">human labels</text>
+          </g>
+          <g data-t="4900">
+            <text x="160" y="132" text-anchor="middle" font-size="12" style="fill:var(--ai)">swap</text>
+            <text x="160" y="145" text-anchor="middle" font-size="12" style="fill:var(--ai)">one</text>
+          </g>
+          <path id="swapArrow" d="M142 160H176" stroke="rgba(176,193,224,.6)" stroke-width="1.4"/>
+          <g id="mg">
+            <use id="m0" href="#hu" x="186" y="140" width="20" height="40" style="color:var(--hu)" opacity="0"/>
+            <use id="m1" href="#hu" x="210" y="140" width="20" height="40" style="color:var(--hu)" opacity="0"/>
+            <use id="m2" href="#hu" x="234" y="140" width="20" height="40" style="color:var(--hu)" opacity="0"/>
+            <use id="rb" href="#ai" x="234" y="140" width="20" height="40" style="color:var(--ai)" opacity="0"/>
+          </g>
+          <g data-t="6300">
+            <text x="220" y="200" text-anchor="middle" font-size="12.5" font-weight="600" style="fill:var(--ai)">mixed</text>
+            <text x="220" y="215" text-anchor="middle" font-size="12">one label</text>
+            <text x="220" y="229" text-anchor="middle" font-size="12">from the LLM</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="step s2" data-t="6700">
+        <h3><i>2</i>Agreement &amp; Gap</h3>
+        <p class="d">score agreement over all <i class="m">N</i> items, take the gap and budget</p>
+        <div class="eq slide" data-t="7500"><span class="m" style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trH" viewBox="0 0 46 30" style="color:var(--hu)"><use href="#hu" x="0" y="0" width="15" height="30"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
+        <div class="eq slide" data-t="8300"><span class="m" style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span>&nbsp;<span class="m"><b>=</b> R(<b>{</b></span><svg class="trio" id="trM" viewBox="0 0 46 30"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></svg><span class="m"><b>}</b><span class="ss"><span>N</span><span>i=1</span></span>)</span></div>
+        <div class="gapbox" id="gapbox" data-t="9200">
+          <div class="slide" data-t="9300"><span class="m"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> <span style="color:var(--ai)">R<span class="ss"><span>(b)</span><span>m</span></span></span> <b>−</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span></span></div>
+          <div class="slide" data-t="10200"><span class="m">ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>=</b> c <b>(1 −</b> <span style="color:var(--hu)">R<span class="ss"><span>(b)</span><span>h</span></span></span><b>)</b></span></div>
+          <div class="slide" data-t="11100" id="adjLine"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span> <b>=</b> <span class="hat">Δ</span><span class="ss"><span>(b)</span><span>&nbsp;</span></span> <b>+</b> ε<span class="ss"><span>(b)</span><span>&nbsp;</span></span></span></div>
+        </div>
+        <div class="cap" style="margin-top:auto"><span data-t="11800">collect over the <i class="m">B</i> repetitions:&nbsp;</span> <span class="m" id="collectSet" data-t="12700"><b>{</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span></span></div>
+      </div>
+
+      <div class="step s3" data-t="14200">
+        <h3><i>3</i>Near-Worst Gap</h3>
+        <p class="d">order the <i class="m">B</i> adjusted gaps and take the <i class="m">α</i>-quantile</p>
+        <svg class="draw hist" id="hist" viewBox="0 0 240 140" role="img" aria-label="Distribution of bootstrap gaps with the 5% quantile above zero"></svg>
+        <div class="cap slide" data-t="23000">only <i class="m">α</i> = 5% of the gaps are lower</div>
+        <div class="cap slide" data-t="23600">the decision statistic:&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>=</b> Q<span class="ss"><span>&nbsp;</span><span>α</span></span><b>({</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span><b>)</b></span></div>
+      </div>
+
+      <div class="step s4" data-t="24600">
+        <h3><i>4</i>Decision</h3>
+        <p class="d">pass if the decision statistic stays above zero</p>
+        <div class="big slide" data-t="25300">if&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>&gt; 0</b></span></div>
+        <div class="cap slide" data-t="26000" style="color:#C9D7F0;font-size:14px">reject <span class="m">H<span class="ss"><span>&nbsp;</span><span>0</span></span><b>:</b> Δ <b>+</b> ε <b>≤ 0</b></span></div>
+        <div class="cap slide" data-t="26700">the gap stays inside the budget</div>
+        <div class="verdict"><svg id="vr" viewBox="0 0 20 40" style="color:var(--ai)"><use href="#ai"/></svg><span id="vt">can replace</span><svg id="vh" viewBox="0 0 20 40" style="color:var(--hu)"><use href="#hu"/></svg><span id="vc" class="check">✓</span></div>
+      </div>
+    </div>
+    <div class="playbar" aria-hidden="true"><i id="bar"></i></div>
+    <div class="flyers" aria-hidden="true">
+      <svg class="flyer" id="fH" viewBox="0 0 70 40" style="color:var(--hu)"><use href="#hu" x="0" y="0" width="20" height="40"/><use href="#hu" x="24" y="0" width="20" height="40" opacity=".65"/><use href="#hu" x="48" y="0" width="20" height="40" opacity=".4"/></svg>
+      <svg class="flyer" id="fM" viewBox="0 0 70 40"><use href="#hu" x="0" y="0" width="20" height="40" style="color:var(--hu)"/><use href="#hu" x="24" y="0" width="20" height="40" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="48" y="0" width="20" height="40" style="color:var(--ai)"/></svg>
+      <span class="flyer chip m" id="fC"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span></span>
+      <span class="flyer gdot" id="fG"></span>
+    </div>
+    <figcaption>For each of <i class="m">B</i> iterations, the test resamples <i class="m">N</i> items, draws <i class="m">k</i> = 3 human labels per item, swaps one for the LLM's label and scores both panels with Krippendorff's <i class="m">α</i>. The LLM passes when the <i class="m">α</i>-quantile of the margin-adjusted gaps is positive. Annotator identities are never used.</figcaption>
+  </figure>
+
+
+  <h2 class="reveal">Authors</h2>
+  <div class="people">
+    <div class="grid">
+      <div class="person hasbio reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Nagham Omar</div>
+          <div class="role">MSc student, Data Science &amp; Engineering</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/nagham-omar-88ab9a226/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="mailto:nagham.omar@campus.technion.ac.il" aria-label="Technion email" title="Technion email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="mailto:nagham.technion@gmail.com" aria-label="Gmail" title="Gmail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5.2a2.8 2.8 0 0 0 5 1.7A9 9 0 1 0 17.5 19"/></svg></a>
+            <a href="https://github.com/naghamo" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49l-.01-1.9c-2.78.62-3.37-1.21-3.37-1.21-.46-1.19-1.11-1.51-1.11-1.51-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9l-.01 2.818c0 .27.18.59.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg></a>
+            <a href="https://huggingface.co/naghamo" aria-label="Hugging Face" title="Hugging Face"><svg viewBox="0 0 24 24" fill="currentColor"> <circle cx="12" cy="9.6" r="6.7"/> <g fill="#1B3051"> <path d="M9.0 8.1c.75 0 1.35.62 1.35 1.38H7.65c0-.76.6-1.38 1.35-1.38z"/> <path d="M15.0 8.1c.75 0 1.35.62 1.35 1.38h-2.7c0-.76.6-1.38 1.35-1.38z"/> <path d="M12 13.9c-1.6 0-2.95-.92-3.4-2.2-.1-.3.12-.6.44-.6h5.92c.32 0 .54.3.44.6-.45 1.28-1.8 2.2-3.4 2.2z"/> </g> <g transform="rotate(-24 5.9 16.6)"> <rect x="3.3" y="12.9" width="5.2" height="7.4" rx="2.5"/> <path d="M4.9 13.7v5.8M6.6 13.7v5.8" stroke="#1B3051" stroke-width=".72" stroke-linecap="round"/> </g> <g transform="rotate(24 18.1 16.6)"> <rect x="15.5" y="12.9" width="5.2" height="7.4" rx="2.5"/> <path d="M17.1 13.7v5.8M18.8 13.7v5.8" stroke="#1B3051" stroke-width=".72" stroke-linecap="round"/> </g> </svg></a>
+            <a href="https://scholar.google.com/citations?user=n1mU6h0AAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+            <a href="https://x.com/Nagham_Omar_" aria-label="X" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.6 2h6.8l4.7 6.2zm-1.1 18h1.7L7.3 3.8H5.4z"/></svg></a>
+          </div>
+          <p class="bio">Nagham Omar is a master's student in the Faculty of Data and Decision Sciences at the Technion – Israel Institute of Technology, advised by Prof. Avigdor Gal. Her research spans ordinal alignment problems in machine learning, LLMs as judges, and active learning.</p>
+        </div>
+        <div class="pic"><div class="avatar"><img src="data:image/webp;base64,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" alt="Nagham Omar"></div></div>
+      </div>
+
+      <div class="person hasbio reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Dr. Rotem Dror</div>
+          <div class="role">University of Haifa</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/rotem-dror-43664938/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="mailto:rdror@is.haifa.ac.il" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="https://rtmdrr.github.io/" aria-label="Website" title="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg></a>
+            <a href="https://scholar.google.com/citations?user=ZB0tZNEAAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+  <a href="https://x.com/DrorRotem" aria-label="X" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.6 2h6.8l4.7 6.2zm-1.1 18h1.7L7.3 3.8H5.4z"/></svg></a>
+          </div>
+          <p class="bio">Dr. Dror is a faculty member at the University of Haifa. Her research is on drawing reliable conclusions from empirical evidence in NLP: statistically sound model evaluation, measuring the quality of data annotations, and deciding when LLMs can stand in for human judgment. She was a postdoctoral researcher at the University of Pennsylvania with Prof. Dan Roth and received her PhD from the Technion, advised by Prof. Roi Reichart.</p>
+        </div>
+        <div class="pic"><div class="avatar"><span class="initials">RD</span></div></div>
+      </div>
+
+      <div class="person reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Almog Gueta</div>
+          <div class="role">Google Research</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/almoggueta/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="https://scholar.google.com/citations?user=EMrlp8kAAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+          </div>
+        </div>
+        <div class="pic"><div class="avatar"><span class="initials">AG</span></div></div>
+      </div>
+
+      <div class="person hasbio reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Prof. Avigdor Gal</div>
+          <div class="role">Benjamin and Florence Free Chaired Professor of Data Science</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/avi-avigdor-gal-432a49/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="mailto:avigal@technion.ac.il" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="https://avigal.dds.technion.ac.il/" aria-label="Website" title="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg></a>
+            <a href="https://scholar.google.com/citations?user=APs1p2oAAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+          </div>
+          <p class="bio">Prof. Gal's research focuses on effective methods of integrating data from multiple and diverse sources under conditions of uncertainty. With close to 200 publications in leading journals and conferences in the areas of databases and AI, he is a recipient of multiple best paper and test of time awards.</p>
+        </div>
+        <div class="pic"><div class="avatar"><img src="data:image/webp;base64,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" alt="Avigdor Gal"></div></div>
+      </div>
+
+      <div class="person hasbio reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Prof. Roi Reichart</div>
+          <div class="role">Professor and Vice Dean for IT</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/roi-reichart-ba2a8a7/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="mailto:roiri@technion.ac.il" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="https://roireichart.com/" aria-label="Website" title="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg></a>
+            <a href="https://scholar.google.com/citations?user=xXJIsh4AAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+  <a href="https://x.com/roireichart" aria-label="X" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.6 2h6.8l4.7 6.2zm-1.1 18h1.7L7.3 3.8H5.4z"/></svg></a>
+          </div>
+          <p class="bio">Prof. Reichart is a Professor and Vice Dean for IT at the Faculty of Data and Decision Sciences at the Technion, an affiliated lecturer at the Centre for Human-Inspired Artificial Intelligence at the University of Cambridge, and an ELLIS fellow. He was Co-Editor-in-Chief of TACL from 2022 to 2026 and is a PC chair of EACL 2027.</p>
+        </div>
+        <div class="pic"><div class="avatar"><span class="initials">RR</span></div></div>
+      </div>
+
+      <div class="person hasbio reveal" tabindex="0">
+        <div class="meta">
+          <div class="name">Nitay Calderon</div>
+          <div class="role">PhD candidate, Technion<br>Research Scientist, Google Research</div>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/nitay-calderon-b628a6185/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21H9z"/></svg></a>
+            <a href="mailto:nitayc@google.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="https://nitaytech.github.io/" aria-label="Website" title="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg></a>
+            <a href="https://scholar.google.com/citations?user=_1qnAh4AAAAJ&amp;hl=en" aria-label="Scholar" title="Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg></a>
+  <a href="https://x.com/NitCal" aria-label="X" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.6-8.7L1.6 2h6.8l4.7 6.2zm-1.1 18h1.7L7.3 3.8H5.4z"/></svg></a>
+          </div>
+          <p class="bio">Nitay Calderon is a PhD candidate in the Faculty of Data and Decision Sciences at the Technion – Israel Institute of Technology, advised by Prof. Roi Reichart, and a Clore fellow. He is a Research Scientist at Google Research in Tel Aviv. His research spans NLP, causal inference, concept-based explainability and domain adaptation.</p>
+        </div>
+        <div class="pic"><div class="avatar"><span class="initials">NC</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="reveal">
+    <img class="crest" src="data:image/png;base64,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" alt="Technion – Israel Institute of Technology">
+    <p>Faculty of Data &amp; Decision Sciences<br>Technion – Israel Institute of Technology, Haifa</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seed = 7; function rnd(){ seed = seed*16807%2147483647; return seed/2147483647; }
+  function $(id){ return document.getElementById(id); }
+  function clamp(x){ return x<0?0:(x>1?1:x); }
+  function ease(x){ x=clamp(x); return 1-Math.pow(1-x,3); }
+  function back(x){ x=clamp(x); var c=1.6; return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2); }
+  function prog(t,a,b){ return clamp((t-a)/(b-a)); }
+  function lerp(a,b,p){ return a+(b-a)*p; }
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* ---------- panel 1 actors ---------- */
+  var cols = ['var(--hu)','rgba(142,193,245,.55)','var(--ai)','rgba(242,86,143,.55)','var(--hu)','rgba(142,193,245,.55)','var(--ai)','rgba(142,193,245,.55)'];
+  var dotsD = [[26,32],[40,26],[54,30],[64,40],[32,46],[46,42],[56,52],[38,54]];
+  var slotS = [[140,30],[154,24],[168,30],[178,42],[146,46],[160,48],[170,54],[134,42]];
+  $('dD').innerHTML = dotsD.map(function(p,i){ return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="'+cols[i]+'"/>'; }).join('');
+  var sdots = slotS.map(function(p,i){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','3.5'); $('dS').appendChild(c); return c; });
+  var H = [0,1,2].map(function(i){ return $('h'+i); }), M = [0,1,2].map(function(i){ return $('m'+i); });
+  var HX = [62,86,110], MX = [186,210,234];
+  var rb = $('rb'), sel = $('sel'), curve = $('curve'), trav = $('trav'), item = $('item'), swapA = $('swapArrow');
+  var curveLen = curve.getTotalLength(), swapLen = 34;
+  swapA.setAttribute('stroke-dasharray', swapLen); curve.setAttribute('stroke-dasharray', curveLen);
+
+  /* one draw of the sample for iteration it (-1 = the first, walked-through draw) */
+  function draw(it){
+    seed = it<0 ? 11 : 1000+it*31;
+    var src = slotS.map(function(){ return Math.floor(rnd()*8); });      /* with replacement */
+    var ops = [1,.65,.4].map(function(o){ return [o,rnd()]; }).sort(function(a,b){ return a[1]-b[1]; }).map(function(a){ return a[0]; });
+    if (it<0) ops = [1,.65,.4];
+    return { src:src, pick: it<0 ? 5 : Math.floor(rnd()*8), ops:ops, r: it<0 ? 2 : Math.floor(rnd()*3) };
+  }
+  var first = draw(-1);
+  var ITER0 = 14600, ITERD = 700, NIT = 8;
+  var iters = []; for (var k=0;k<NIT;k++) iters.push(draw(k));
+
+  function placeCurve(px,py){ curve.setAttribute('d','M'+px+' '+(py+8)+'C'+(px-26)+' 100 70 104 36 140'); curveLen = curve.getTotalLength(); curve.setAttribute('stroke-dasharray', curveLen); }
+
+  function panel1(t){
+    var d = first, base = 1400, step = 160, flyD = 450, curA = 3100, curB = 3700, hum0 = 3900, cpA = 5100, cpB = 5800, swA = 5900, swB = 6300;
+    var k = -1;
+    if (t >= ITER0 && t < ITER0+ITERD*NIT){ k = Math.floor((t-ITER0)/ITERD); d = iters[k]; var T = ITER0+k*ITERD;
+      base = T; step = 22; flyD = 220; curA = T+200; curB = T+420; hum0 = -1e9; cpA = -1e9; cpB = -1e9; swA = T+420; swB = T+620; }
+    else if (t >= ITER0+ITERD*NIT){ d = iters[NIT-1]; base = curA = curB = hum0 = cpA = cpB = swA = swB = -1e9; }
+    /* dots fly from the pool into the sample ellipse */
+    sdots.forEach(function(c,i){
+      var a = d.src[i], p = ease(prog(t, base+i*step, base+i*step+flyD));
+      c.setAttribute('cx', lerp(dotsD[a][0], slotS[i][0], p).toFixed(1));
+      c.setAttribute('cy', (lerp(dotsD[a][1], slotS[i][1], p) - Math.sin(p*Math.PI)*14).toFixed(1));
+      c.setAttribute('fill', cols[a]); c.setAttribute('opacity', t < base+i*step ? 0 : 1);
+    });
+    var px = slotS[d.pick][0], py = slotS[d.pick][1];
+    sel.setAttribute('cx',px); sel.setAttribute('cy',py); sel.setAttribute('opacity', t >= curA-100 ? 1 : 0);
+    placeCurve(px,py);
+    /* the chosen item travels down the arrow */
+    var pc = ease(prog(t, curA, curB));
+    curve.setAttribute('stroke-dashoffset', (curveLen*(1-pc)).toFixed(1));
+    curve.setAttribute('marker-end', pc >= 1 ? 'url(#ah)' : '');
+    if (pc > 0 && pc < 1){ var pt = curve.getPointAtLength(curveLen*pc); trav.setAttribute('cx',pt.x); trav.setAttribute('cy',pt.y); trav.setAttribute('opacity',1); } else trav.setAttribute('opacity',0);
+    item.setAttribute('opacity', pc >= 1 ? 1 : 0);
+    /* three human labels step in, one at a time */
+    H.forEach(function(h,i){
+      var p = k>=0 || t>=ITER0 ? 1 : back(prog(t, hum0+i*250, hum0+i*250+420));
+      h.setAttribute('x', (HX[i] - (1-p)*16).toFixed(1)); h.setAttribute('opacity', (d.ops[i]*clamp(p*1.4)).toFixed(2));
+    });
+    /* copy them across the swap arrow */
+    var ps = ease(prog(t, 4800, 5200)); swapA.setAttribute('stroke-dashoffset', (swapLen*(1-ps)).toFixed(1)); swapA.setAttribute('marker-end', ps>=1?'url(#ah)':'');
+    var pm = ease(prog(t, cpA, cpB)), q = ease(prog(t, swA, swB));
+    M.forEach(function(m,i){
+      var isR = (i === d.r);
+      m.setAttribute('x', lerp(HX[i], MX[i], pm).toFixed(1));
+      m.setAttribute('y', 140 - Math.sin(pm*Math.PI)*16);
+      var o = t < cpA ? 0 : d.ops[i]; if (isR) o = o*(1-q);
+      m.setAttribute('opacity', o.toFixed(2));
+    });
+    /* the LLM drops into the swapped slot */
+    rb.setAttribute('x', MX[d.r]); rb.setAttribute('y', (140 - (1-back(q))*26).toFixed(1)); rb.setAttribute('opacity', q.toFixed(2));
+  }
+
+  /* ---------- panel 3: bootstrap gaps (illustrative shape, evenly spaced normal quantiles) ---------- */
+  var n = 56, mu = .035, sd = .018;
+  function qn(p){ return 4.91*(Math.pow(p,.14)-Math.pow(1-p,.14)); }
+  var vals = []; for (var i=0;i<n;i++) vals.push(mu + sd*qn((i+.5)/n));
+  var qstar = vals[Math.floor(.05*n)-1];
+  seed = 3; var order = vals.map(function(v,i){ return i; });
+  for (var i=n-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=order[i]; order[i]=order[j]; order[j]=tmp; }
+  var lo=-.03, hi=.1, X0=10, X1=230, Y=112, bw=.005, dy=7;
+  function xs(v){ return X0 + (v-lo)/(hi-lo)*(X1-X0); }
+  var bins = {}, pos = [];
+  order.forEach(function(idx,k){ var v=vals[idx]; var b=Math.floor((v-lo)/bw); bins[b]=(bins[b]||0)+1;
+    pos.push({v:v, x:xs(lo+(b+.5)*bw), y:Y-4-(bins[b]-1)*dy, t:ITER0+300+Math.floor(k/7)*ITERD+(k%7)*70}); });
+  function pdf(v){ return Math.exp(-Math.pow((v-mu)/sd,2)/2)/(sd*Math.sqrt(2*Math.PI)); }
+  var sc = n*bw*dy, path='', tail='';
+  for (var i=0;i<=80;i++){ var v=lo+(hi-lo)*i/80, x=xs(v), y=Y-pdf(v)*sc; path += (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); if (v<=qstar) tail += (tail?'L':'M')+x.toFixed(1)+' '+y.toFixed(1); }
+  var xq = xs(qstar), x0 = xs(0);
+  tail += 'L'+xq.toFixed(1)+' '+(Y-pdf(qstar)*sc).toFixed(1)+'L'+xq.toFixed(1)+' '+Y+'L'+X0+' '+Y+'Z';
+  $('hist').innerHTML =
+    '<path id="htail" d="'+tail+'" fill="rgba(255,176,87,.28)" opacity="0"/>'+
+    '<line x1="'+X0+'" y1="'+Y+'" x2="'+X1+'" y2="'+Y+'" stroke="rgba(176,193,224,.45)" stroke-width="1.2"/>'+
+    '<line x1="'+x0+'" y1="'+Y+'" x2="'+x0+'" y2="'+(Y+5)+'" stroke="rgba(176,193,224,.6)"/><text x="'+x0+'" y="'+(Y+17)+'" text-anchor="middle" font-size="12">0</text>'+
+    '<g id="hdots"></g>'+
+    '<path id="hcurve" d="'+path+'" fill="none" stroke="var(--gap)" stroke-width="1.8"/>'+
+    '<line id="qline" x1="'+xq+'" y1="'+Y+'" x2="'+xq+'" y2="'+Y+'" stroke="var(--gap)" stroke-width="1.6"/>'+
+    '<text id="qlab" x="'+xq+'" y="28" text-anchor="middle" font-size="14" font-family="STIX Two Text,serif" font-style="italic" style="fill:var(--gap)" opacity="0">q<tspan dy="-6" font-size="10">*</tspan><tspan dx="-5" dy="10" font-size="10">α</tspan></text>'+
+    '<text x="'+X1+'" y="'+(Y+17)+'" text-anchor="end" font-size="13" font-family="STIX Two Text,serif" font-style="italic">Δ<tspan dy="4" font-size="10">adj</tspan></text>';
+  var hd = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','3'); c.setAttribute('cx',p.x.toFixed(1)); $('hdots').appendChild(c); return c; });
+  var hcurve = $('hcurve'), hlen = hcurve.getTotalLength(); hcurve.setAttribute('stroke-dasharray', hlen);
+  function panel3(t){
+    hd.forEach(function(c,i){ var p = pos[i], f = prog(t, p.t, p.t+380), e = f*f;
+      c.setAttribute('cy', (lerp(-6, p.y, e)).toFixed(1)); c.setAttribute('opacity', t < p.t ? 0 : .9);
+      c.setAttribute('fill', (p.v <= qstar && t >= 21800) ? 'var(--gap)' : 'var(--hu)'); });
+    hcurve.setAttribute('stroke-dashoffset', (hlen*(1-ease(prog(t,20600,21600)))).toFixed(1));
+    $('htail').setAttribute('opacity', ease(prog(t,21800,22300)).toFixed(2));
+    $('qline').setAttribute('y2', lerp(Y, 34, ease(prog(t,22200,22800))).toFixed(1));
+    $('qlab').setAttribute('opacity', ease(prog(t,22700,23000)).toFixed(2));
+  }
+
+  /* ---------- cross-panel flights (measured live, so they work in every layout) ---------- */
+  var fig = $('proc');
+  function rel(el){ var a = el.getBoundingClientRect(), b = fig.getBoundingClientRect(); return {x:a.left-b.left, y:a.top-b.top, w:a.width, h:a.height}; }
+  function fly(el, from, to, p, arc){
+    if (p <= 0 || p >= 1){ el.style.opacity = 0; return; }
+    var e = ease(p), x = lerp(from.x, to.x, e), y = lerp(from.y, to.y, e) - Math.sin(p*Math.PI)*(arc||30), w = lerp(from.w, to.w, e), h = lerp(from.h, to.h, e);
+    el.style.opacity = 1; el.style.transform = 'translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)'; el.style.width = w.toFixed(1)+'px'; el.style.height = h.toFixed(1)+'px';
+  }
+  function boxOf(use0, use2){ var a = rel(use0), c = rel(use2); return {x:a.x, y:a.y, w:c.x+c.w-a.x, h:a.h}; }
+  function flights(t){
+    var pH = prog(t,6900,7600), pM = prog(t,7700,8400);
+    fly($('fH'), boxOf(H[0],H[2]), rel($('trH')), pH, 40);
+    fly($('fM'), boxOf(M[0],M[2]), rel($('trM')), pM, 40);
+    $('trH').style.opacity = t >= 7600 ? 1 : 0; $('trM').style.opacity = t >= 8400 ? 1 : 0;
+    var c = $('fC'), adj = rel($('adjLine')), set = rel($('collectSet'));
+    fly(c, {x:adj.x, y:adj.y, w:60, h:26}, {x:set.x, y:set.y, w:60, h:26}, prog(t,11900,12700), 18);
+    /* each iteration sends its adjusted gap on to step 3 */
+    var g = $('fG'), k = Math.floor((t-ITER0)/ITERD);
+    if (t >= ITER0 && k < NIT){ var T = ITER0+k*ITERD, hs = rel($('hist'));
+      fly(g, {x:adj.x+12, y:adj.y+6, w:8, h:8}, {x:hs.x+hs.w*.5, y:hs.y+hs.h*.35, w:8, h:8}, prog(t, T+300, T+680), 50); }
+    else g.style.opacity = 0;
+  }
+
+  function panel4(t){
+    var p = back(prog(t,27300,28100));
+    $('vr').style.transform = 'translateX('+((1-p)*-60).toFixed(1)+'px)'; $('vr').style.opacity = clamp(p*1.5);
+    $('vh').style.transform = 'translateX('+((1-p)*60).toFixed(1)+'px)'; $('vh').style.opacity = clamp(p*1.5);
+    $('vt').style.opacity = ease(prog(t,28000,28400));
+    var c = back(prog(t,28300,28800)); $('vc').style.transform = 'scale('+c.toFixed(2)+')'; $('vc').style.opacity = clamp(c);
+  }
+
+  var loopEl = $('loop');
+  var items = [].slice.call(fig.querySelectorAll('[data-t]'));
+  var steps = [].slice.call(fig.querySelectorAll('.step'));
+  var STARTS = [0,6700,14200,24600], END = 33500;
+  var bar = $('bar');
+  var t = reduce ? END-1 : 0, last = null;
+  function render(){
+    for (var i=0;i<items.length;i++) items[i].classList.toggle('on', t>=+items[i].dataset.t);
+    var lp = ease(prog(t,12900,13800)); loopEl.style.clipPath = 'inset(-20px '+((1-lp)*100).toFixed(1)+'% -4px -8px)';
+    bar.style.width = (t/END*100)+'%';
+    var st = STARTS.filter(function(s){ return t>=s; }).length-1;
+    steps.forEach(function(s,i){ s.classList.toggle('cur', i===st); });
+    panel1(t); panel3(t); panel4(t);
+    if (!reduce) flights(t); else { $('trH').style.opacity = 1; $('trM').style.opacity = 1; }
+  }
+  function tick(ts){ if (last!==null){ t+=Math.min(ts-last,60); if (t>END) t=0; } last=ts; render(); requestAnimationFrame(tick); }
+  render(); if (!reduce) requestAnimationFrame(tick);
+
+  var revs = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)){ revs.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e,i){ if (e.isIntersecting){ setTimeout(function(){ e.target.classList.add('in'); }, i*70); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -12% 0px'});
+  revs.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
