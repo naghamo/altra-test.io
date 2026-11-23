@@ -34,7 +34,7 @@
   body{margin:0;background:var(--bg-deep);color:var(--text);
     font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:700px;margin:0 auto;padding:34px 20px 60px;position:relative;z-index:1}
+  .wrap{max-width:1080px;margin:0 auto;padding:34px 20px 60px;position:relative;z-index:1}
 
   /* background: the item pool as a faint dot field, with soft lights in the role colors */
   body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -52,7 +52,7 @@
   .venue b{color:var(--text);font-weight:600}
   .venue .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
 
-  h1{font-size:clamp(30px,7vw,42px);line-height:1.1;letter-spacing:-.022em;font-weight:600;margin:0;text-wrap:balance}
+  h1{font-size:clamp(30px,6vw,48px);line-height:1.1;letter-spacing:-.022em;font-weight:600;margin:0;text-wrap:balance}
   h1 .w-ai,h1 .w-hu{transition:color .28s ease}
   h1:hover .w-ai,h1:focus-within .w-ai{color:var(--ai)}
   h1:hover .w-hu,h1:focus-within .w-hu{color:var(--hu)}
@@ -66,10 +66,10 @@
   h1:hover .tmark .k3,h1:focus-within .tmark .k3{opacity:1;transform:none;transition-delay:.48s}
   h1:hover .tmark .k4,h1:focus-within .tmark .k4{opacity:1;transform:none;transition-delay:.66s;animation:qbob 1.6s ease-in-out .9s infinite}
   @keyframes qbob{0%,100%{transform:none}50%{transform:translateY(-3px) rotate(8deg)}}
-  h1 .sub{display:block;font-weight:400;color:#C5D4EE;font-size:.56em;line-height:1.28;margin-top:9px;letter-spacing:-.01em}
+  h1 .sub{display:block;font-weight:400;color:#C5D4EE;font-size:.5em;line-height:1.28;margin-top:9px;letter-spacing:-.01em}
   .byline{color:var(--muted);font-size:14px;margin:14px 0 0}
 
-  .tldr{color:#C9D7F0;font-size:15.5px;margin:26px 0 0;max-width:64ch}
+  .tldr{color:#C9D7F0;font-size:16.5px;line-height:1.65;margin:26px 0 0}
   .tldr b{color:var(--text);font-weight:600}
   .tldr p{margin:0 0 12px}
   .abstract{max-width:none}
@@ -95,7 +95,7 @@
 
 
   /* ---------- method illustration ---------- */
-  .proc{margin:34px 0 0;position:relative;width:min(1180px,calc(100vw - 40px));left:50%;transform:translateX(-50%)}
+  .proc{margin:34px 0 0;position:relative;width:100%}
   .steps{display:grid;grid-template-columns:minmax(0,1.32fr) repeat(3,minmax(0,1fr));gap:0;position:relative}
   .loop{grid-column:1/3;position:relative;height:30px;margin:0 22% 6px 4%;border:1px dashed rgba(176,193,224,.45);border-bottom:0;border-radius:8px 8px 0 0;top:8px}
   .loop::after{content:"";position:absolute;left:-5px;bottom:-3px;border:4.5px solid transparent;border-top:7px solid rgba(176,193,224,.6)}
@@ -144,7 +144,7 @@
   .playbar{height:2px;background:var(--line);border-radius:2px;margin:10px 0 0;position:relative;overflow:visible}
   .playbar i{position:absolute;left:0;top:0;height:2px;width:0;background:linear-gradient(90deg,var(--ai),var(--gap) 55%,var(--ok));border-radius:2px}
   .playbar i::after{content:"";position:absolute;right:-3px;top:-2px;width:6px;height:6px;border-radius:50%;background:#fff}
-  .proc figcaption{color:var(--muted);font-size:13px;line-height:1.45;margin:14px auto 0;max-width:660px}
+  .proc figcaption{color:var(--muted);font-size:13px;line-height:1.45;margin:14px 0 0;max-width:none}
 
   /* ---------- authors ---------- */
   h2{font-size:14px;font-weight:600;color:var(--muted);margin:44px 0 4px;padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -153,7 +153,8 @@
     .people{padding-bottom:0}
     .people:has(.person.hasbio:hover),.people:has(.person.hasbio:focus-within){padding-bottom:144px}
   }
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 14px;position:relative}
+  .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px 14px;position:relative}
+  @media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   .person{display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;outline:none;padding:12px 6px;border:1px solid transparent;border-radius:14px;
     transition:margin .22s cubic-bezier(.2,.8,.3,1),background .25s ease,border-color .25s ease}
   .person:hover,.person:focus-within{margin-top:-4px;margin-bottom:4px;background:rgba(198,213,239,.05);border-color:var(--line)}
@@ -162,7 +163,7 @@
   .name{font-size:15.5px;font-weight:600;letter-spacing:-.012em;line-height:1.3;transition:color .2s ease}
   .person:hover .name,.person:focus-within .name{color:#fff}
   .role{color:#A6B9DA;font-size:12.5px;margin-top:5px;line-height:1.4}
-  .bio{position:absolute;top:100%;left:0;right:0;margin:18px auto 0;max-width:60ch;color:var(--muted);font-size:13.5px;line-height:1.5;text-align:center;
+  .bio{position:absolute;top:100%;left:0;right:0;margin:18px auto 0;max-width:80ch;color:var(--muted);font-size:13.5px;line-height:1.5;text-align:center;
     opacity:0;transform:translateY(9px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
   .person:hover .bio,.person:focus-within .bio{opacity:1;transform:none;transition:opacity .55s ease .22s,transform .6s cubic-bezier(.2,.8,.3,1) .22s}
   .links{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin-top:11px}
