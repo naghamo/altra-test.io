@@ -71,6 +71,13 @@
 
   .tldr{color:#C9D7F0;font-size:15.5px;margin:26px 0 0;max-width:64ch}
   .tldr b{color:var(--text);font-weight:600}
+  .tldr p{margin:0 0 12px}
+  .abstract{max-width:none}
+  .abstract p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  h2.abs-h{margin:0 0 12px}
+  .tldr p:last-child{margin-bottom:0}
+  .tldr a{color:var(--text);text-decoration:underline;text-decoration-color:rgba(242,86,143,.55);text-underline-offset:3px;transition:color .16s ease,text-decoration-color .16s ease}
+  .tldr a:hover{color:var(--accent);text-decoration-color:var(--accent)}
 
   .masthead{display:flex;align-items:flex-start;gap:26px}
   .titleblock{flex:1 1 auto;min-width:0}
@@ -242,7 +249,10 @@
   </div>
 
 
-  <p class="tldr">Tests that decide whether an LLM can replace a human annotator need the same annotators to label every item, which crowdsourced and preference data rarely have. <b>AltRA-Test</b> resamples labels inside each item, swaps one for the LLM's, and asks whether the mixed panel's agreement stays within a budget set by the humans' own disagreement. It is a consistent test of asymptotic level α. Across 18 LLMs and 20 text, image, audio and video datasets, judges pass in 95 of 201 pairs with their best prompt, and about 100 items often suffice.</p>
+  <div class="tldr abstract">
+    <h2 class="abs-h">Abstract</h2>
+    <p>As LLM judges increasingly replace human annotators, a reliable statistical test is needed to decide whether an LLM judge can actually replace humans. The Alternative Annotator Test (Alt-Test; <a href="https://aclanthology.org/2025.acl-long.782/" title="The Alternative Annotator Test for LLM-as-a-Judge: How to Statistically Justify Replacing Human Annotators with LLMs (ACL 2025)">Calderon et al., 2025</a>) was a first step, designed for dense settings in which the same annotators label every item, whereas in many large-scale settings different items have different annotators. <b>AltRA-Test</b>, the Alternative Annotator Test with Resampled Annotations, works in all annotation settings without requiring shared annotators, and needs only three human annotations per item, often for about 100 items. It replaces one human annotation per item with the LLM annotation and tests whether inter-annotator agreement stays as high as among the humans alone, that is, whether the LLM preserves the signal the annotators share. In simulations, where the better annotator is known, AltRA-Test makes more correct replacement decisions than existing baselines. On real data, covering 18 LLMs, 5 prompting techniques and 20 datasets across text, image, audio and video, LLMs pass in about half of the setups, depending mainly on the task.</p>
+  </div>
 
   <figure class="proc" id="proc" aria-label="How AltRA-Test works">
     <div class="steps">
