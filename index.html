@@ -58,6 +58,17 @@
   h1:hover .w-hu,h1:focus-within .w-hu{color:var(--hu)}
   h1 .tw{display:inline-flex;align-items:center;gap:.28em}
   .tmark{height:1.02em;width:auto;overflow:visible}
+  @keyframes tt-hum{0%{transform:none;opacity:1}8%{transform:translateY(-10%) rotate(-6deg)}16%{transform:translateY(0) rotate(5deg)}24%{transform:none}52%{transform:none;opacity:1}64%{transform:translate(-90%,-30%) rotate(-55deg);opacity:.7}78%,100%{transform:translate(-160%,-55%) rotate(-95deg);opacity:0}}
+  @keyframes tt-llm{0%{transform:none}8%{transform:translateY(-10%) rotate(6deg)}16%{transform:translateY(0) rotate(-5deg)}24%,36%{transform:none}50%{transform:translateX(-190%) rotate(-14deg)}58%{transform:translateX(-170%) rotate(-6deg)}76%{transform:translateX(-95%)}88%{transform:translateX(-95%) translateY(-8%)}100%{transform:translateX(-95%)}}
+  @keyframes tt-arr{0%{transform:none;opacity:1}10%{transform:translateX(12%)}20%{transform:translateX(-6%)}28%{transform:none;opacity:1}40%,100%{opacity:0}}
+  @keyframes tt-q{0%{transform:none;opacity:1}10%{transform:rotate(14deg)}20%{transform:rotate(-10deg)}28%{transform:none;opacity:1}40%,100%{opacity:0;transform:scale(.6)}}
+  h1:hover .tmark .k1,h1:focus-within .tmark .k1{animation:tt-hum 2.6s ease-in-out both}
+  h1:hover .tmark .k3,h1:focus-within .tmark .k3{animation:tt-llm 2.6s ease-in-out both}
+  h1:hover .tmark .k2,h1:hover .tmark .k2h,h1:focus-within .tmark .k2,h1:focus-within .tmark .k2h{animation:tt-arr 2.6s ease-in-out both}
+  h1:hover .tmark .k4,h1:focus-within .tmark .k4{animation:tt-q 2.6s ease-in-out both}
+  @keyframes tt-ok{0%,14%{opacity:0;transform:scale(.3)}24%{opacity:1;transform:scale(1.25)}32%,78%{opacity:1;transform:none}92%,100%{opacity:1;transform:translateX(-500%)}}
+  .tmark .k5{transform-box:fill-box;transform-origin:50% 50%}
+  h1:hover .tmark .k5,h1:focus-within .tmark .k5{animation:tt-ok 2.6s ease-in-out both}
   /* the human -> LLM ? mark: builds in once on load, then stays; on hover it comes alive */
   .tmark .k1,.tmark .k2,.tmark .k2h,.tmark .k3,.tmark .k4{transform-box:fill-box;transform-origin:50% 100%}
   .tmark .k1{animation:mk-in .45s cubic-bezier(.2,.9,.3,1.3) .35s both}
@@ -67,10 +78,6 @@
   .tmark .k4{transform-origin:50% 60%;animation:mk-in .4s cubic-bezier(.2,.9,.3,1.3) 1.1s both}
   @keyframes mk-in{from{opacity:0;transform:translateY(6px) scale(.85)}to{opacity:1;transform:none}}
   @keyframes mk-draw{from{stroke-dashoffset:19}to{stroke-dashoffset:0}}
-  h1:hover .tmark .k1,h1:focus-within .tmark .k1{animation:mk-hop .7s ease-in-out infinite}
-  h1:hover .tmark .k2,h1:hover .tmark .k2h,h1:focus-within .tmark .k2,h1:focus-within .tmark .k2h{animation:mk-nudge .7s ease-in-out infinite}
-  h1:hover .tmark .k3,h1:focus-within .tmark .k3{animation:mk-hop .7s ease-in-out .35s infinite}
-  h1:hover .tmark .k4,h1:focus-within .tmark .k4{animation:mk-wig 1s ease-in-out infinite}
   @keyframes mk-hop{0%,100%{transform:none}30%{transform:translateY(-4px) scaleY(1.04)}55%{transform:translateY(0) scaleY(.94)}70%{transform:none}}
   @keyframes mk-nudge{0%,100%{transform:none}50%{transform:translateX(3px)}}
   @keyframes mk-wig{0%,100%{transform:none}25%{transform:rotate(-14deg) translateY(-2px)}50%{transform:rotate(10deg)}75%{transform:rotate(-6deg) translateY(-1px)}}
@@ -285,7 +292,7 @@
 
   <div class="masthead">
     <div class="titleblock">
-      <h1><span class="tw">AltRA-Test<svg class="tmark" viewBox="0 0 76 40" aria-hidden="true"><use class="k1" href="#hu" x="0" y="1" width="19" height="38" style="color:var(--hu)"/><path class="k2" d="M23 22H41" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" fill="none"/><path class="k2h" d="M37 17.5 41.5 22 37 26.5" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><use class="k3" href="#ais" x="45" y="1" width="19" height="38" style="color:var(--ai)"/><text class="k4" x="71" y="32" text-anchor="middle" font-size="27" font-weight="600" fill="#A6B9DA" font-family="IBM Plex Sans,sans-serif">?</text></svg></span>
+      <h1><span class="tw">AltRA-Test<svg class="tmark" viewBox="0 0 76 40" aria-hidden="true"><use class="k1" href="#hu" x="0" y="1" width="19" height="38" style="color:var(--hu)"/><path class="k2" d="M23 22H41" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" fill="none"/><path class="k2h" d="M37 17.5 41.5 22 37 26.5" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><use class="k3" href="#ais" x="45" y="1" width="19" height="38" style="color:var(--ai)"/><path class="k5" d="M80 21l4.5 4.5 9-10" stroke="#4CC774" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/><text class="k4" x="71" y="32" text-anchor="middle" font-size="27" font-weight="600" fill="#A6B9DA" font-family="IBM Plex Sans,sans-serif">?</text></svg></span>
         <span class="sub">An Alternative Annotator Test for <span class="w-ai">LLM Judges</span> Without Shared <span class="w-hu">Annotators</span></span>
       </h1>
       <p class="byline">Nagham Omar · Rotem Dror · Almog Gueta · Avigdor Gal · Roi Reichart · Nitay Calderon</p>
