@@ -1619,7 +1619,7 @@
     });
 
     /* count one run in the private GoatCounter stats (no data from the file is sent) */
-    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: 'test-run', title: 'Try AltRA-Test: run', event: true}); } catch(e){}
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: 'altra-test-run', title: 'AltRA-Test page: test run', event: true}); } catch(e){}
     res.innerHTML = ''; res.hidden = false; run.disabled = true; prog.hidden = false; setup.hidden = true;
     bar0();
     var bar = prog.firstChild, ji = 0;
@@ -1700,8 +1700,8 @@
   paintMetric();
 })();
 </script>
-<!-- GoatCounter: private visit and test-run counts. Replace GOATCOUNTER_CODE with your site code from goatcounter.com -->
-<script data-goatcounter="https://GOATCOUNTER_CODE.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<!-- GoatCounter: private visit and test-run counts. dashboard: naghamo.goatcounter.com -->
+<script data-goatcounter="https://naghamo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
 /* light / dark switch, remembered in this browser */
 (function(){
