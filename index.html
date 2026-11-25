@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AltRA-Test: An Alternative Annotator Test for LLM Judges Without Shared Annotators</title>
 <meta name="description" content="AltRA-Test: a statistical test for replacing human annotators with LLM judges when items are not all labeled by the same annotators.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231B3051%22/%3E%0A%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20stroke%3D%22%238EC1F5%22%20stroke-width%3D%221.7%22%3E%3Ccircle%20cx%3D%226.2%22%20cy%3D%229%22%20r%3D%222.6%22/%3E%3Cpath%20d%3D%22M6.2%2011.6v7.2M2.6%2014.2h7.2M6.2%2018.8%203.4%2024.6M6.2%2018.8l2.8%205.8%22/%3E%3C/g%3E%0A%3Cpath%20d%3D%22M10.8%2016.4h4.6%22%20stroke%3D%22%23A6B9DA%22%20stroke-width%3D%221.5%22/%3E%3Cpath%20d%3D%22M14%2014.4l2.4%202-2.4%202%22%20stroke%3D%22%23A6B9DA%22%20stroke-width%3D%221.5%22/%3E%0A%3Cg%20stroke%3D%22%23F2568F%22%20stroke-width%3D%221.7%22%3E%3Crect%20x%3D%2217.4%22%20y%3D%226.6%22%20width%3D%226%22%20height%3D%225%22%20rx%3D%221%22/%3E%3Cpath%20d%3D%22M20.4%206.6V5M20.4%2011.6v7.2M16.8%2014.2h7.2M20.4%2018.8l-2.8%205.8M20.4%2018.8l2.8%205.8%22/%3E%3C/g%3E%0A%3C/g%3E%0A%3Ccircle%20cx%3D%2219.3%22%20cy%3D%229.1%22%20r%3D%22.75%22%20fill%3D%22%23F2568F%22/%3E%3Ccircle%20cx%3D%2221.5%22%20cy%3D%229.1%22%20r%3D%22.75%22%20fill%3D%22%23F2568F%22/%3E%0A%3Ctext%20x%3D%2228.4%22%20y%3D%2221%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2CHelvetica%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2211%22%20fill%3D%22%23A6B9DA%22%3E%3F%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAQAElEQVR4AexdB3wURRf/715y6T1AcmmUJFJTQJCigB8gVUwEFD/1EwtSBLHx2Quf2AuiICoIYlcUEAURVBBFQKUFJEBQCCkQCKSQXm6/eQeHKXe3czV3l73fze3uzJs3773979yUN7MiWvATlZKWEpF0zXhNctpMdv6sJiVtGTtfH5WSvleTkn6KHSUlpDudDS7cm72a5PRvWVjK7tEzmuS0GZFJaeOi2D1tQUjBsYDuOkEdmXzNcE1K2kJmgOOAsFsliisEQXidnT8sQJjEzocDSBKANuyofJ3QAhfuTZIgYAQLtzIRHxEE4Q1RFL4Au6fs/mZrktMXaFLSh6FXL0848GN3QAf1GB0SlZJ+S1Ry+pcaz7ozoiCuFyBMZwaIcaCeSlEOtAC7v7GCgLsEYENUfexpBu5PNElpNxAW7C2GaK8CNIlXhzNF5vuL6pOsjPcg4FqmpD87V76tywJB7L5PFEThY8JCVEraaxGpI+3272tzQLfpOsGfAXkOfDyOMkXuZkBWt677p2hr1AICGBaEWaLW6y+GkSfCLxkbYJTWwgTRwnzNs1H7OCXtHk913d8MyE+woNTGza3UgjHOU7QgCAGCgDlqHxUDdtpMMOzYSjpbAFqMYm1kjbrusAhhHms32e3vxFZKK3ycwwKEFUEQXteoaw9FJqfdxKQSWbDqaxUD+svQpKR9xyR4TwDi2FH5KhYw2wIChPaiIHygSU5bFxo/MhBWfCwGdGTqtXFqb9VvTJihVpSvZFUscNECrLYe7u3vta1d0tUdLkaaeWIRoKNS0lIESbtTENDZzPIUcsUCJi3AKsiuKlH1W2TStT1NEhpJNBvQmqSxYyVgKys4zAhPJVqxgFUWYNgKF0Ttz2wSLt1cRmYBOjIp7WEI4mpWoK+5BTkzvSKb81mAMMbCl5qU9NnmSCfyErMG+1WCIMxlQeDNo9ApFrDGAjqsSXg+Mil9BC8fLkBHp4xLYBMkKwQBXPRQPooFbGQBwpwo4tOo5PREHpayAKUpbK1U/40AwarhFB5hFBrFAkYsECRBWsMzpCcD6MEebAp7tSAIXE8HlI9iATtZgGHwEh9/r08BhkkTZYgm0hCVHLJAEDDAFI2SpljAcRYQRhImTZVnFNC6hriAKaYyK2mKBRxuAQFTdNg0UrAxQIuCKL1iJI8SrVigRS0gCnjJmAAGAc1mAv/DOoFdjWVS4hULtKgFBHTXJKVPNCRDc0B3naCWIDxliFiJUyzgNBYQpecQP9KrqTzNAK3xrLtPUDznmtpJuXYyCwgQ2mv8vO9tKlYjQNOYMwTp4aZEynUrsIArqsiwGtFkOVcjQAs+HnMZ8pUJFBe6ud28/PF42054S9MdL0V0xm0hUS4kvXWiElZVWu+nG3K5COjI7uldJAF3NExUzp3bAqP82+CLuJ74d3AUBvmHYkxgW8xu0wnvRyfBT7h4a51bCSulI8ySb76ezUWtRRUGCYBKn6AcndsC8WpfPBd5iUEhe/sG4+kIw2kGM7hwpACoRK00Uq/CRUAzpHN7NOkzK8eWs8Ds8I5Qm6iFRwa0QVcvf7SGT0Psnge0bncb6crWoLy76NjNWx6sXbz83EVdk3oIwGD9Dk06QEfWxg4RoHjTwfDHKWPDPNSyckWrvWVp3IQgiDBMuugALQpIg/JxGQt4m2hqNFRCBaHhpVuf6zGsAzTTe6xba6so5/4WEKSrSUkxKunavuwkkgWHfhNT+uDyq6/H0Otvw5hJMzFu2oNIv3M2Rt08HUMm3IL+I8dB06F19NQdani3LUzQEJZFNjOY4igdYxO6YcSNUzHzhSW4+ta7cdnQq5Hc/1+4JPUytO/cAx27JaPLpf2Rcvkw9BuRjhvueRyTn3wNV4ydiJA2EY4Ss0XL6aL2Q3pAOzzIRjHejeqB5WxMuWlYHNWdS8YxAW0N5id+r7BJmMkhMbjCNwShokN3vOWS3SIiQUoRJUGKsCizGZki4jph4qwnMGHGw+jW53Kovfk7K4Gh4egzZAwmPfwirrphMvyCgs0o2XVI+/gE4eeOfbGyfS88y8aXJ4VGo79fCPr4BjcLlzJaHs0iPb2b5dXzG8UmYe5r0wHvRPfA1vh+eLptArwFkYet09JIQLAoSILlgJZRzdvPH2Nvvwc33jcHUR2tW8UlqkT06DsIU/+3AANGT5Ap2XWSRdaBmRUeh2XRPRDuIT9yYS/NxgdH4ovYnuio9rFXEXbnK7DKWZQg2aXKC4uIxs2zn0FC0qU2V6TvVdfgupmPQu3lbXPejma4nAF5amgcRCeoHTt5+eJLBupBvqGONoNNypMkRIiCINi8hu7QJRk33j8HgSFhNhHUEJOY+C64afZcUJPEULorxNFs36WsSeFMsnqLKrwc2RmhKpdsVweLkmTbNnR0p85stOJ+eKq9YO9PCOso3nDPk/ALtMufjF3FT/EOxK0hFnrGCQKfbKzK4iNsTOWv8sBzEZc0jnSBK4FVziKT02ZoCA5vh7Q774cgElvG2QFf/6AQXDtlNjw8XadG8RFEvMJqQUHgBKYD7Ni0iIF+oRgfaPM/76bF2PSaKmeRmdQmgPby8cX46Q/By9vxnYq20XEYfctMmxrHnswG+4VBw0Yg7FmGjreVD8xNwRodG/pxhUBYFiEINmkbXHntzQgKa2Ox3qfzj6PkbKHF+eN79ETnXv0tzu/IjInevrYpzliTQmLsKbCDNd8ELz8wkFjDwrF5GZZFW5RIIxrd+lxhFqtSBt4fvliOj+c9hdfuvxXvv/AIlsy5BwsemoIv3nwev65fibqaGrN4Xu4iw3md1fKeclyKUw1MwKXQKAOLsAESRcY/kU30NGLt5Bc2AfQVbArbHD3//O1nvPfcQ9jz80acOHYE9XW1F7NXV5Yj+9B+bPt2Jd57/kEU5B67mCZ3Qv8QqQOHy5G1eHpHDpDsqyxFr6yt6HJ4i+mQxdIpNKTL+tl0Hkb7wIlMLjvEs6E8LkInIbIa0AFsJq9T91QudWprqvHVktew/qO3UVtTJZun5MxpfPjSY9ix8WtZWj1B6hXD9KdOe/Tj6DTn1FahQqq3mw6Z1eVcvANEDy46ZyGyGtCJPXpz67J55Yc4su8Pbno94S/ffIaDu7bpL00eQ9pGICxCeUmtSSO5caLVgI5P7sVlnmOZGcjYtomL1hDRDyveQ8W5EkNJzeLik/hkapbRogglkzNZwCpAe/v6Iaqj/AB8dVUl1n2wyCq9qyrK8S1rqvAwSUi+lIdMoXFDC1gF6HYxHSAI8t1pai5Ulp+z2nxUyxefOSXLp21UnCyNqxHczMaEv4m7FLs7DcD69r1xd1gcRBi3fbynr87h6bdO/fFLx75YpOmGiBZ0fnKUvUVrCvLxD+TKfjovh4uOh6gwX56XIAjglY2nzJakCWKdsjc0XfFI23iQ85C3SoU4tQ+mMUDT/huGQDoxKBIrYlPR1zcEAWwam9YfDvYPw6q4XhjCji2pj73LtgrQvv4BXPIVskkTLkIOotN5xzmoAB9O2biYtSAR+XwM9Q83KEEv3yDQrGPDRBW7uIuBnYDPTht9g1WeIKf+RpFudmEVoL1YG5rHHmdO5vGQcdEUnsjlovPx9eeic3aiXr6m/wV7+wQ1UiHW0wem/Kq7ewXAV1A1yuNOF1YBuq662qQt9Im29Ibj5VXXYLJGL4crHjvLbBbTscnERxcZepUoINaNtzewCtDl5aVcGCHnIS5CDqJ2Me05qIDy0mIuOmcn2lhm2r/l+ybpm8rPoEarNapWLpuwOcg5qWKUiRMnWAXoylK+cWFbApqXVwWnbE58b3SifVVSgKPVFbrzpj/F7F/ow6L8RtGVkhbvFBnvOC88k92I3t0urAJ0+blSLnu0sdEwmiiqEB4RLVtmVXkZtFr7TRvLCmBDghpImHMqyyDHFwr/Rom2rlna4jPHDT4EOyqKsbq0oBm9O0VYBejCEzmo5fCIo+VSsQnWv7Kl38hxEDj8IE4c/9ud7hF2VJag95GtuDf/AF45fRT/PZGJAUe2GQUnPQSjsv/ATcf34PlTf+F/BVkYn70Lk3Iz3MouhpSxCtDa+nr8/eduQ3wbxYkMhLT6m7zhGiWYcZGY0gd9r+Lb4Clr7+9mcHYN0jL2j7OetZeXsObE1+dO46z2Hw9FYxrsrCrF8uI8fFJyAn9Wlxkjs0W80/CwCtCkxWFO8NCKFloqZcmi1rjOPXQb01B5PCErw3wHKB6+Co3zW8BqQB9hgD5XfJZL09B2Gkx6+AUkXz6Mi95D7aXbKmz8tAe56Ikoc+dWVNlgmp14KcH1LGA1oKnztXXdF9ya02rwoRNuwXUzHoVfYLDRfJoOCbj1kRd1W4UZJWqSoGXDVb98s6JJrPNd1kvyMomCcT8N+dzyFLzctcaWeckX0SIUVgOapP5zxxaYOxsYk9AFU59egNsfn4ebHpiLCTMewfWznsBNs5/RxdP2BObu67F36w+gpV0kkzOH3LpKWfFSfQJBU9hy4b7wDpgX0QW0D96bmm6Y0zaBK9+00FhZGYjgOBu3pqOrBJsAmpRd+/5CrhEPotUHqqiCwtuAJktoFCS6YyLaRcfBNyCYDVbpqfiORadP4pevP+MjbmEqntUi7Ty8MCMsTibE6nwzRgS2Ae2Dd6V/GK4LjsSMULl8cRgd2JbLCvurrfeS5CrIRkQ2AzQ5Da1d/gYkM/6i6G+PQlNd6N/WUHxTOv01+UrTwtqaavllXfo8DjsaKOhgla1GHJiV2LdZEYbimhHJR+Sx2plGV+QpnYfCZoAmlf7avxtbzWhPUx5rQ319HVa+/ZJLNDX0uh60xRCaGRWHvlxzj5m2kNPcQq2ktymgSZYdG74ya1Er5bEmfL3sDd3KcWt4ODrvfgaUbRVF9i/WCtBTZ/BtNuNofyFtW4LNAU3i0aLWte+/ifq65tOylE7BCltTdpSVFOGDFx/FX/t26q5d7ee+/EycrjNv35FGOlK7rFGEgQsrmh6vFR4DPXgGuDp1lF0ATRof3PkrPpk/B8aWXgkCdQmJ0ngwRnEy+2+8z8B8Ks91HW2KtXW4h01lU01o3AJGUrhrA8sQTT4fi9mMpJHSnTraboAmrQuOH8XSubOxfcMa1FRZ32GjrcI2fLoEH7/2FCrLSqkIlw672NT0TTl7cYJ1vpxBEerQf1Scj6l5+51BHItksCugSaKqijJsXfs5Fv/vXt32XgU5xyiaAnfIPrgP33++TLdV2L5tmyGxCRTuzE5OuJuBevSxP/BZ8YkWlZQeqltyMzD31BFUSdoWlcWawu0OaL1wNB1N23t9+PJjWPjIVFRXyk8u5B45qNv37otFL4AmTfS83O1IPsxPncrSedDdnXcAy87mYE9FKart+OASgNeVnsIzp/7ChOxdGHr0d/xeWeLypnUYoBtaivyV62prGkYZPC8vLWIdy1qDae4YSR50G8sL8WLhUdyQuwcpR34xuEdd6pGtFCPZcgAAEABJREFUXOovPnvcYH7aL+9fR3/D/ScP4sPiPF3nT2v2VBaXCA4nahFAO1xLpcBWYwEF0K3mVrcORRVAt4773MJaOq54BdCOs7VS0gULBAQEQhMZifhO8YiJjkZoSAg8PT0vpFp3MBvQA8ZMwG2PvYz7539oVTDlC61XqXPPflaVMfPFJbhp9lx07N4TzvJ5sm08NrTvjczEgRaH3QmXc6kzOTTW4jJIvh2d+uPTmBSkeAdwlWeIyNfHF8OGDcVtk27Fg/99EC+98AKeeOxR3HvPPZhy52TcPXMmHn7oITw7dy7mPPEkZky/C9eNn4DUlFRD7GTjzAL0NXfci77DrgG9Tk2WsxMQ0Is520W3R/rk+5B8+VCbSaRSqdC+fXuEsJqFl6m3IOrAMTFYgxi1D2+2FqULVHkg2ScQn8Smmr0nnh+9RfjqsXjskUdw1dBh6NKlM8LDQk3q4+vni7i4WPTufSn+fcNEPPXkk7h69Gizam9uQPceMgbxPVx33+Uh4/6DtgzcJi0qlygIGD58OOY89STumjYNj7Ca5Z5ZsxDN/jblsj7YpqMOHHJ0zpr+YkRnRHp4cYnXq1dPzL7/Plxx+QB4qj258hgi8vP1xcCBA/HfBx5Ap46dDJE0i+MGdK/BI5pldqUI2v6g56DhVol8bXo6hv7rX/BS/3NjozQa3DV9GugmGmPuCQETWc1sLN0V4n1FFcYHRciK+u+JN2DiddfDz89PlpaXIDg4GFOn3Il+/frJZuECNG1sztPmlS2thQnCNTEWS9C2bVv07dPHYH4P9tdMN3HUyJEG0y/xMn5zDWZw0sgEta9RyahTN/n2O5CammKUxtqEa9PSZEHNBej6+nprZXGK/FK95T4KMTHREATT3mtXDh6M226dBHWDGpwUr+X2jiNq5w0SjOtP/16JiQl2F37smDEIDw83Wg4XoGurq3C2IN8oE1dJOJF9xGJR1R5qrrxdOnfBjLumIyjon21uD9WUo8oNKoU9VYY9HDt17IhLe5nfv8rPz0eJmXsQenh4YPy4cUbvBRegKfePKz+gg8uGqopybFu/ymL5s/7ifxgiIyJwL+ssUq2uL/ClwqP6U5c85tRU4qNiw/t8jxxhuKnVVNHqmmp8/8MPeOXVeZj94IOYN38+5j7zLB5noxnvLluKzMyDTbMYvKYHKCoqymAaN6DJhXPDp++ilgllkJMTR9J7WVa+9RKMLTbgEb2wsBA7duzgIdXRUKdo+tRpSL0wnvpxST4WnDmmS3O1nz+ryjAlbz9qDDSdaGKEhtrkdMo8mInnX3gR323YgJMFJxuRV1VV4eDBQ1j63jIsePPNRmnGLrp17WowiRvQlHvftk1YOvcBbF79MWhBbM6RTFgaiJ9cqCgrsZg/yUUvK6K3by1/7iFY09zQy/nlqtX4Yyf/ki/6e6Tx1NGjRulYLDxzHCOO/o75p4/i5/Kz+K2i2KLwB8unYyjzQy6ilpZB+b4sOQlaVTP++C4cra00WNrAgVcYjG8YmX/iBN7/4EOUlcmvds/OzsbK1asbZjd4HhNtuINvFqCJM63l27lpHVYvfgWfv/GMxUF+Q3Lg+OEDFvMn2dYuX4jMP7aCx1WVdJMLkqTFZ59/jrVr14F2aZKj16cPHjToYmcxmwHjraIc3MlqPHKotyRMZnn1vE0dvzl3Cpbw1+d5rOAwvisrNFUEunbtZjK9orISS5ctQ52J9aVNGWzbtg2Ur2l8w+vAQMOzl2YDuiHT1nq+ectPWLb8PVRzvpKD7ESdxVkz72rUWaR4Vw4R7SKglvHB2LVrF0pKzF84cLrA9Ov7AgMDDZpOAbRBs8hHUptv/htvoLi4WJ74AkXbtu2adRYvJLnkgWrJEydP4mxREcorKgzqkJuXazBeLvJM0Vk5EoPprQbQiQkJmDljBp59eq7OQYacZKwNNCUbxGaxYMZqj6adRYN3xUUiD2dl4dV58/Dc88/jqTlzdCMXjzz2GBu5eEY3krFw0SIcOJBpkTYhIcEm8xmr9d0e0KJKhdGjRuOO229HbEyMVb4Fhiysn2qQDCUaidN3FnumphqhcN3o2tpaNrZcqhvJOHbsGCpZG9oSbSIjIk1ma7WADg4MxOBBAyEIeuiZtJOFiQIEC3JOGD8ePr7Gp5MtYOmaWZpIPWL4cHh7ezeJbXxJ/w6NY85fuX0NHRMbe15Th/3y19VUU3dOTHSYZK5QUIcOHXDF5ab9vWkE5LffDb92xO0BrdGY/uuyz03mBzW9f8Y+Mrge1wTWz7njttugVpt2M9i8+SdQ08aQhm4P6P37HbcL0HkYU+ODgiFzN487zWYgm8e2vpjBAwfhtknk2GUazDQ9vmnzJqMGcntA5+TkYv+ffxo1gO0SJLPb0UePHsXx48dtJ4ILcvL398eUO+/E6NGjQE0wUyoUsLHpDz76yBQJ3B7QpP3qr75ClRmTIJTHnCDpiPlrZSKn8duPPv6YTltt0Gg0uGfW3YjvJL8aJS8/H4vefps1NUxvUNQqAE1DPI8/8QSWLl2Gteu+xYbvN9osHM46zIahz0OaF5nkqLNg4Zu64S2ZPG6bnNQjCTOmTUdQ4D9utsaU3ZuRgQULFqC8XN4XpFUAWm+ozEMHsfmnzdi48Xurw48/bkJYWDgSExIhCPy18+affsLSZe+hxgW9FvV2tPbYvVs33HzTjbJzArU1tVi9Zg0+ZM2MOk5/8lYFaGtvhD4/jR1PnzYNvVJT9VGyR3LO+fiTT9k/xDpZWncmoNUm1193nayK1L94+dVXsHXrVlnahgQKoBtag+O8TZs2uG/WLNCsIwe5jqS8vBxvvrUIu/fs1l235h8ayZCbNPll66/MXm/pfETMtZUCaDMsFqWJwqyZMxEcHMydizp/tDKDRlu4M7kp4YABA0AVgin11q//Dl+t+coUick0BdAmzfNPIq1qvvXWW+Dl5fVPpMzZgcxM6Dp/FrhPmmJtXhfUFCfHpg2UmQGkxRM/bPrRKqFcF9BWqW1+5vj4eK4euZ4zdf6Wvde6O396W9CxA5vSDg01vnMSLcNa8/XXRGpVUADNab5gjuElYqV0/sgKzUNMjOElU3rK3Xv2WOyZp+dBxxYDtErlQeWbDIKoMpnuyMSikmLZ4srLynSD//bu/KnAN0zowUknq5gNCGJltksrOHXKBqUALQLouEu6w9vPX1aBjl2T4e0rTyfLyAYEWVlZJlennDpVgHmvv+6QqewxAW24NBruz0fHxcxKop+2bMHid981Gvbs2WtlCeeztwig+4289nzpMr+eai84y556tHsU+RFQLdxU7AMHDmD+GwstWjvXlJfctYoR3BkWy37lvxq1N8YFtpMndABFTm4uDh8+bDSUc8wC8ojpcEBHdeqMqA6JPLLpaFIGXgVPL2/deUv/kCPRK6/Nx7fr14NqbOqVL1v+PpYtX+6wmb8xAe0Q5clvjztCTLddW9qmPOWbQ+NwQPcbnmaOfPD28UXPgcPNymNP4nPnSvHjpk14Z8kS3ZYGBw78ac/iGvEW2NXUML7amZHqvu29fDHGv63uvDX8OBTQkXGdQO1ncw1L2+B6eJr2kzWXpyvSj2Bt4vYWbJY+Jazla+nExESYCjRpZYt74lBAX3aVebWzXkHfgEAkDRiiv2y1x2kWAjPeyw/D/MJbzG6iSoXJt99uMowaxbc/npwSDgN0WEQUOnVPlZPHaHrfYWMhqqhLZJTErROG+IchwcvyEZ+Z4XFubR+9cg4DdL+RxrdA1Qtj6ujjH4Ae/f5lisSt06aHmtd2bmqMBFZLD/I1PlPXlN5Vrx0C6ODwdkhM7m21jfpeNRaC6BCRrZbVlgyu8A1BV4NvojKvlLtbQS3tEHT0Y+POgiCYZ30D1P5BIejWR363SwNZXTpqmpkjG8aUpYeir4/8ChFj+V0h3u6ADggJQ5ee8i974TVWv+HpgA0eDrjIpw8DYCoLthJ3aph7t6XtDui+bGSDp5lQU13Fdc8CQ8NBL+REK/lM4Ww7V2jruCxymW8wkm3QfOEqrAWI7ApoenNWUv8rudT67fuvkX2Yb5KiP2vCcDF1caKubFSjv18Ilxb/K/gLebV8lcK0UPetpe0K6MuuuobrZlDtvOfnjdixcQ0XPb3JNsEGnUyuwlqQ6O6w9lylE5C/OVeARWeyuegH+YeiC3tYuIhtQKStr9ftTErvVTEWFrOZVxsUBbsBmrzpkvrx1c67t2xEdWUFclgNXZBzlEuv/jLDgFxMnJgoXu0LAh6PiIvP5IBevLe6tACn66p5smC6jTqaXIU5kMhugL6MTYSoPDxkVamtqcEfm9ZepPv125UXz02dhEdGo2PXFFMkLp02k7N2JgCvLD3/Eh4C9dsM3DyKD/ELAz00PLSuRGMXQHv5+CJ5wFAuO2Rs24SqBq6Df/+5G4Uncrny9h9l3WQNVyEtQBTn6Y1hbGaQp+h3z+aitsGG65+XnEBRfa1sVkEQMJWzwynLzIkI7ALoS4eMhqdaLasmta1+Z53BpoTbvpN/CxLlaRfTAbGXdKdTtwp3saE1QRBkdSqtr8OnDMANCQncSxnIG8YZOx8Z0Ab08BhLd8V4mwPaU+3F7e65b8cWGHob1uE9O1B0+vzfqJxR+3J2POX4OEu6xsMLowP43D2XFuWgWtI2E/3j4jwQ2JslNIkQ2UMzNSy2SaxrX9oc0D0Hj4SawyFf0mqxY4ORmliSsH0j394MMfFdoGmf4Np3oYH001ntTEBrEGXwtFxbjw+KDL/ZtYKB/H0GaoMZm0TSggF6iJpEu9JlI1ltCmgPT09ceuXIRgUYu8jctQ3nis4YS0bm71tRVlJkNL1hQt8RbPawYYSLnoer1LiGc8kUgZmAa0zV94tyUcVAbyxdH+/BaunJoTH6S5c/2hTQKVcMg7evn6xRJFYDb5MZzaAafPsGvlq6Q5cktI3mG7OVFa4FCaaFxYAAJicCAZWaG6bozjEwf1Scb4rkYtq1QRGgh+lihAuf2AzQokqFPkOu5jLFkYw/UFxYIEu7j42AVJadk6Ujgn4uXksHix4YHxRJqsiGz1hHkAArR7jkbA5qWPNDjk4tiJgcGi1H5hLpNgN0cv8hIJ9lHq15a14aBdnxA99uOp269wQtIuAp3xlpyGeDgCUnGwF0CecoRrG2DitK+DrX17GHiR4qufKdPd0mgBZEEX2G8dXORzMzcCr3GLdd9rIp8aqKcll6QRDQd7hlS7xkmduZIEBUYWJwJFcpKxlAC+tN72LfkNFbZ46jjjXxGsYZOvdmMtzmBrW0TQDd/bJB8A/ic6LZvn6VIXsajaurrcXOzeuNpjdMuCTlMtBigoZxrnBOQCJAyclKwFzMmhFydBfT2QmBfw2bEmenst9/B0eBHi5ZQicmsB7QVDNyjgXn/nUQ+ceyzDbH7i3fgRyY5DLSP4Wr1dK+rP16czBf+3Vt6Snkc/pqNLTVO2ePQ8tRS/uxWl4qDZAAAAhYSURBVPo/IXyyNOTvTOdWA7prr/4gH2UepbZzzgA25UWOS+TA1DTe0HUXJk9ASJihJKeMu4UBiIAkJxyNDC06y+dN15RXdm0Vvj13umm0wev/sFqaHjKDiS4QaTWgeceAyYsu+9B+i01CDkzkyCTHQFSx0ZZhY+XInCLdi9XOkxigeYT57lwhCJg8tIZo3mK1ND0UhtIaxgWqPHAjA3XDOFc6twrQiazNSr7JPApvMzYryJOZ0ZADEzkysVPZbw/WpqfFBbKELUxwI+sIEoB4xFhoYe2s532kpgKbyoxPZOnp6Hgr6xzSw0bnrhasAjTv2C/5ZfyVsdNq25AjEw3lyTFSeXig99AxcmQtmu4JAXdwerv9VH4GBEhrBV7AamkeHiEqT1zPhvF4aJ2NxmJAR3W8BOSTzKPQ1nVf8pDJ0pAjEzk0yRIygh59B7Nfo98WTxgZ0AYEHB5BFrGhNx46OZrM6jJsLedzJ3DVZofFgO7QNUXOfrr00rOFOLR7u+7cFj/k0ETT4nK8yEEqJrGbHFmLpQ/0C+Uqe0dFMfZW8c2W8jCkEQ8euli1N2I9vXlInYrGYkDTEiseTbZT25ljyIiHF9GcKzqDg7u30als8OHwK5FlYieCYPa3zsP6bc5mAg8vovmtsgS7WaBzuRDIpuPlaJwt3WJAl56Rf4UAecvt37HF5jr/um4leHrsxYXyMtpcOE6GObWVspQHWM28jdXQsoRmEtCIB0+WHDbcx0PnTDQWAzpz56+QG0aj9YE8zQNzDUKOTQd3/WoyWwGbXjdnit0kMzskruSYvXvp9N92KBnYwtrRcrX0ZjYiUqLl2+vDLkJayJQAXWJJXvrr37TyA6NZszL+AHnLGSWwMuGHFctB7XNDbKqrKvHdx+8YSnKauH2s9jW17cDyolxs52waWKLU7JMHUV5Py2qb5z5VW4M5p8yf0W3OyeExJSL7627sjmWGDATYVYtfxdmCxn63v65fiTXvvmYGJ/NJafbwo1efZB3OHY0y5x09jA9fegyn8443infGi9fPZGNOQRbO1v3jbHSuvg5PnczC83aqnfV2yKutxrjju0CdTn0cHbeUnUV69k6cbCATxbtIOCYKgmAxoEnJv/fvwrJn/4tFj92Fzxc8gwUPTYGc8z7ls0WoOFeCb957A0uevg+fzn8ar8++A5++9j8uX2tblG8LHrTIdcDf2zHq6O/4T85eDGLnn5WesAVrWR7ZrB0/KTcDY4/txA3Hd6PL4S2Ykr8fZ7Xyq8ZlmbcAAVXOogSJ35fThJAErpysTFRXlpugsk9SSeEp5P19iLXp+bbCso8U1nE9ysD1O2tiVHI45FtXUvPcWTXl2MOaQM1TXCxGwEkRkmBVDe1iKiviurMFGJZFSZAUQLvzTW5FuhGWRUGr1NCt6J43UtXdLgjLrMlRt8fdFFP0aaUWkOr2iPn7vj7IeoeHWqkJFLXdxAKE4fx9Xx+kiRUIAvgW7bmJ8ooa7mgBQbcNlw7QWq2gANod73Er0kkrSDoM6wB9os7jR6Z7CQvKV7GAK1qg5KQqZysJrgM0DqyoYW0QHcIpUgmKBVzJAjrs7typm948D2gmvdKOZkZQvq5pAel8+5mEvwjoKqluI0O6RJFKUCzgKhYgzFZVVK3Ty3sR0Gf2fpMnQHBun0u91MpRscAFCxBmzx75tvTCJS4CmiLqJDwBCa7r4UNKKKH1WIBhtV6seryhwo0AXZCx6hRrc8xvSKCcKxZwVgsQVk/u/rbRllCNAE2CV5VXPcuORofwWJryVSzQ4haQIJXWVNU/01SQZoCm9ogk4fmmhMq1YgGnsoAkPFd4aE2z/R2aAZqEzi+vmsd6jwV0rgTFAs5mAVY7HyOMGpLLIKBx5NtqAcJThjIocYoFWtoCAjCHMGpIDsOAZpR5e1e9zRrdG9mp8lUs4DQWIEzm7Vm93JhARgHNMkg1lfXj2DGDBeXb+izgjBpnXMAkw7Vh8UwBGtTorpJqR0mQCg1nV2IVCzjIAhJyCYuESVMlmgQ0ZdTNIGpFeiNQJV0rQbFAC1igsk6rHUVYlCtbFtDEIC9j5XathJvYcJ6WrpWgWMBRFiDMEfYK9n21j6dMLkAToxN7V61kx0dZUL6KBRxpgUcvYI+rTG5AE7f8vauel7T117A29UVnEIpXgmIBW1vgPMaEMYQ5c3ibBWhinJ+xZg202j6sQJvsuEQ8XS4oAtvVAmwII1uQhN55e1auNbcgswFNBTBQHxJrPHsxUH9P10pQLGAzC0j4Uazx6MnmQQ5bwtMiQFNBuQdWnM3fs3o4JLxF10pQLGCtBVjNvIQBeRhhy1JeFgP6QoFaJsA0aKWhDNiWv4TwAjPl0EotIGE/YSh/z6rJzAJWjaRZC2hWPpCXsfoHBuxkNsRyGwN2ni5S+VEsIGMBSZKOSlrp34QdwpAMOVeyTQB9oSQt65EuE854JDBQ3w9JKroQrxwUCzS2AGFDkh7Ir/XsnJ+x+hOWaFWtzPJf/NoS0MQUubkrKtkT92qZtraTVpJeZeCu0SUoP4oFJNQwPMwjbOTtXf0KbZ9ha6PYHNB6AUv2rS06sXf1/WXamghocQursb+UJJTp05Vj67CA7p5LoEm5SYQFVtndR9iwl/Z2A7ReYBI+L2PV++yJHJ9f6xHGerJXMSUXsiE/538Jil4J5WiWBSRJymH3902tpB1B95yBeFzenlXLCQtmMbKA2O6AbiTTgRU1rCe7kbW1Z7AhvzihxiMMkFIZyNMkSbqbHV9mx88hYTuLz2fAt1nbqpEcyoXFFjh/T6R8ukd0ry7cM7p37B7W90QVwvP3ro5l9/euE3u/+s4ezQpTwv8fAAD///6q3ykAAAAGSURBVAMAd1WxULxI0R0AAAAASUVORK5CYII=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%231B3051%22/%3E%3Cg%20fill=%22none%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Cg%20stroke=%22%238EC1F5%22%20stroke-width=%221.2%22%3E%3Ccircle%20cx=%226.2%22%20cy=%229%22%20r=%222.6%22/%3E%3Cpath%20d=%22M6.2%2011.6v7.2M2.6%2014.2h7.2M6.2%2018.8%203.4%2024.6M6.2%2018.8l2.8%205.8%22/%3E%3C/g%3E%3Cpath%20d=%22M10.8%2016.4h4.6%22%20stroke=%22%23A6B9DA%22%20stroke-width=%221.1%22/%3E%3Cpath%20d=%22M14%2014.4l2.4%202-2.4%202%22%20stroke=%22%23A6B9DA%22%20stroke-width=%221.1%22/%3E%3Cg%20stroke=%22%23F2568F%22%20stroke-width=%221.2%22%3E%3Crect%20x=%2217.4%22%20y=%226.6%22%20width=%226%22%20height=%225%22%20rx=%221%22/%3E%3Cpath%20d=%22M20.4%206.6V5M20.4%2011.6v7.2M16.8%2014.2h7.2M20.4%2018.8l-2.8%205.8M20.4%2018.8l2.8%205.8%22/%3E%3C/g%3E%3C/g%3E%3Ccircle%20cx=%2219.2%22%20cy=%228.5%22%20r=%22.55%22%20fill=%22%23F2568F%22/%3E%3Ccircle%20cx=%2221.6%22%20cy=%228.5%22%20r=%22.55%22%20fill=%22%23F2568F%22/%3E%3Cpath%20d=%22M19%209.8Q20.4%2011%2021.8%209.8%22%20fill=%22none%22%20stroke=%22%23F2568F%22%20stroke-width=%22.85%22%20stroke-linecap=%22round%22/%3E%3Ctext%20x=%2228.4%22%20y=%2221%22%20text-anchor=%22middle%22%20font-family=%22Arial,Helvetica,sans-serif%22%20font-weight=%22600%22%20font-size=%2211%22%20fill=%22%23A6B9DA%22%3E%3F%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <meta name="theme-color" content="#1B3051">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,6 +135,11 @@
   .verdict{margin-top:8px;display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ok);font-size:14px}
   .verdict svg{width:20px;height:40px;flex:none}
   .verdict{position:relative}
+  .s4 .verdict{margin:auto 0;align-self:stretch;justify-content:center;gap:3px!important;font-size:15px;padding:12px 10px;isolation:isolate}
+  .s4 .vtc > span{color:var(--navt)}
+  .s4 .verdict svg{width:20px!important;height:40px!important}
+  .s4 #varr{width:54px!important;height:12px!important}
+  .s4 .verdict svg{width:26px;height:52px}
   .gl{white-space:nowrap}
   .slotfly{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-size:16px;pointer-events:none}
   .slotfly.big{box-shadow:none}
@@ -228,6 +233,42 @@
     .grid{grid-template-columns:repeat(2,1fr);gap:26px 12px}
     .avatar{width:92px;height:92px;border-width:2.5px}
   }
+
+  .steps{grid-template-columns:minmax(0,1.12fr) minmax(0,1.66fr) 100px minmax(0,.98fr) minmax(0,1.02fr)}
+  .loopsp{grid-column:3/6}
+  .step.s3{border-left:1px solid var(--line)}
+  :root{--eps:#6FA0E8;--dk:#0D1726;--track:rgba(237,242,250,.12);--line2:rgba(237,242,250,.55);--dimc:#1B3051;--pieo:#C9D6EE;--boxs:rgba(237,242,250,.75);--xring:#C9D6EE;--navt:#EDF2FA}
+  .eqpair{display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
+  .rv{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:600;color:var(--text);margin-left:3px;opacity:0}
+  .dpill{background:var(--dk);border-radius:8px;display:flex;align-items:center;justify-content:space-around;box-shadow:0 4px 10px rgba(27,48,81,.25);z-index:3}
+  .cpill{border-radius:8px;display:flex;align-items:center;justify-content:space-around;box-shadow:0 3px 8px rgba(27,48,81,.22);z-index:3}
+  .cpill{justify-content:flex-end!important;overflow:hidden}
+  .echip{background:var(--dk);border:2px solid var(--gap);border-radius:3px;box-sizing:border-box;z-index:3}
+  .cpill i{flex:none;width:12px;text-align:center;font-style:normal;color:#fff;font-size:8.5px;font-weight:700;line-height:1}
+  .dpill i{font-style:normal;color:#fff;font-size:8.5px;font-weight:700;line-height:1}
+  .eqpair .eq{font-size:14.5px}
+  .eqpair .trio{width:37px;height:27px}
+  .step.s2{padding-right:10px}
+  .gapbox{gap:9px;padding:4px 0 4px 10px}
+  .gl{display:flex;align-items:flex-end;gap:5px;font-size:15px}
+  .gl .lhs{min-width:54px;display:inline-flex;gap:3px;justify-content:flex-end;padding-bottom:1px}
+  .bslot{display:inline-flex;flex-direction:column;align-items:center;gap:1px}
+  .bslot .lab{font-size:13px;line-height:1.1}
+  .bslot .labr{align-self:flex-end}
+  .gl .op{font-family:"STIX Two Text",Georgia,serif;font-size:16px;padding:0 1px 1px}
+  .gl .note{font-size:10.5px;line-height:1.2;color:var(--muted);padding-bottom:1px;white-space:normal;flex:1 1 0;min-width:0}
+  svg.bar{display:block;overflow:visible}
+  svg.pie{width:22px;height:22px;display:block}
+  .mid{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;padding:0 4px;border-left:1px solid var(--line)}
+  .mid .cap{font-size:11.5px}
+  .midset{font-size:15px;color:var(--text)}
+  .midarr{width:78px;height:12px}
+  .vtc{display:inline-flex;flex-direction:column;align-items:center;gap:4px;white-space:nowrap}
+  .s4 .verdict{gap:10px}
+  #vc{order:-1}
+  #varr{width:72px;height:12px;overflow:visible}
+  @media (max-width:980px){.steps{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.mid{grid-column:1/-1;flex-direction:row;padding:8px 0}.step.s3{border-left:0}.loopsp{display:none}}
+  @media (max-width:560px){.steps{grid-template-columns:minmax(0,1fr)}.eqpair{flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -235,7 +276,7 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="hu" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10" cy="6" r="5"/><path d="M10 11V26M2 17H18M10 26 3.5 38M10 26 16.5 38"/></g></symbol>
   <symbol id="ai" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 3V0.8"/><rect x="2.5" y="3" width="15" height="11" rx="2" fill="rgba(242,86,143,.18)"/><path d="M10 14V26M2 18H18M10 26 3.5 38M10 26 16.5 38M7 11H13"/></g><circle cx="7" cy="7.6" r="1.4" fill="currentColor"/><circle cx="13" cy="7.6" r="1.4" fill="currentColor"/></symbol>
-  <symbol id="ais" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 3V0.8"/><rect x="2.5" y="3" width="15" height="11" rx="2" fill="rgba(242,86,143,.18)"/><path d="M10 14V26M2 18H18M10 26 3.5 38M10 26 16.5 38M6.4 9.6Q10 14.6 13.6 9.6"/></g><circle cx="7" cy="7.6" r="1.4" fill="currentColor"/><circle cx="13" cy="7.6" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="ais" viewBox="0 0 20 40"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 3V0.8"/><rect x="2.5" y="3" width="15" height="11" rx="2" fill="rgba(242,86,143,.18)"/><path d="M10 14V26M2 18H18M10 26 3.5 38M10 26 16.5 38M7.6 10.3Q10 12.8 12.4 10.3"/></g><circle cx="7" cy="7.6" r="1.4" fill="currentColor"/><circle cx="13" cy="7.6" r="1.4" fill="currentColor"/></symbol>
   <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(176,193,224,.7)"/></marker>
 </defs></svg>
 <div class="wrap">
@@ -244,7 +285,7 @@
 
   <div class="masthead">
     <div class="titleblock">
-      <h1><span class="tw">AltRA-Test<svg class="tmark" viewBox="0 0 76 40" aria-hidden="true"><use class="k1" href="#hu" x="0" y="1" width="19" height="38" style="color:var(--hu)"/><path class="k2" d="M23 22H41" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" fill="none"/><path class="k2h" d="M37 17.5 41.5 22 37 26.5" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><use class="k3" href="#ai" x="45" y="1" width="19" height="38" style="color:var(--ai)"/><text class="k4" x="71" y="32" text-anchor="middle" font-size="27" font-weight="600" fill="#A6B9DA" font-family="IBM Plex Sans,sans-serif">?</text></svg></span>
+      <h1><span class="tw">AltRA-Test<svg class="tmark" viewBox="0 0 76 40" aria-hidden="true"><use class="k1" href="#hu" x="0" y="1" width="19" height="38" style="color:var(--hu)"/><path class="k2" d="M23 22H41" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" fill="none"/><path class="k2h" d="M37 17.5 41.5 22 37 26.5" stroke="#A6B9DA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/><use class="k3" href="#ais" x="45" y="1" width="19" height="38" style="color:var(--ai)"/><text class="k4" x="71" y="32" text-anchor="middle" font-size="27" font-weight="600" fill="#A6B9DA" font-family="IBM Plex Sans,sans-serif">?</text></svg></span>
         <span class="sub">An Alternative Annotator Test for <span class="w-ai">LLM Judges</span> Without Shared <span class="w-hu">Annotators</span></span>
       </h1>
       <p class="byline">Nagham Omar · Rotem Dror · Almog Gueta · Avigdor Gal · Roi Reichart · Nitay Calderon</p>
@@ -277,7 +318,7 @@
           <g data-t="300">
             <ellipse cx="44" cy="40" rx="36" ry="24" fill="none" stroke="rgba(176,193,224,.55)" stroke-width="1.4"/>
             <g id="dD"></g>
-            <text x="44" y="82" text-anchor="middle" font-size="12.5"><tspan font-style="italic" font-family="STIX Two Text,serif">𝒟</tspan>: all items</text>
+            <text x="44" y="82" text-anchor="middle" font-size="12.5"><tspan font-style="italic" font-family="STIX Two Text,Georgia,serif" font-size="14">D</tspan>: all items</text>
           </g>
           <g data-t="1100">
             <path d="M84 40H112" stroke="rgba(176,193,224,.6)" stroke-width="1.4" marker-end="url(#ah)"/>
@@ -307,7 +348,7 @@
             <text x="96" y="215" text-anchor="middle" font-size="12">sample <tspan font-style="italic" font-family="STIX Two Text,serif">k</tspan> = 3</text>
             <text x="96" y="229" text-anchor="middle" font-size="12">human labels</text>
           </g>
-          <g data-t="4900">
+          <g data-t="5400">
             <text x="160" y="132" text-anchor="middle" font-size="12" style="fill:var(--ai)">swap</text>
             <text x="160" y="145" text-anchor="middle" font-size="12" style="fill:var(--ai)">one</text>
           </g>
@@ -329,31 +370,35 @@
       <div class="step s2" data-t="6500">
         <h3><i>2</i>Agreement &amp; Gap</h3>
         <p class="d">score agreement over all <i class="m">N</i> items, take the gap and budget</p>
-        <div class="eq" id="eqH"><span class="rw" data-g="R"><span id="rhL"><span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span>&nbsp;<span class="m"><b>=</b> R(</span></span><span class="m"><b>{</b></span><svg class="trio" id="trH" viewBox="-1 -9 56 40"><g class="gst" transform="translate(8,-8)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g><g class="gst" transform="translate(4,-4)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g><g><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g></svg><span class="m"><b>}</b></span><span class="rw" data-g="R"><span class="m"><span class="ss"><span>N</span><span>i=1</span></span>)</span></span></div>
-        <div class="eq" id="eqM"><span class="rw" data-g="R"><span id="rmL"><span class="m" style="color:var(--ai)">R<span class="ss"><span class="bs">(b)</span><span>m</span></span></span></span>&nbsp;<span class="m"><b>=</b> R(</span></span><span class="m"><b>{</b></span><svg class="trio" id="trM" viewBox="-1 -9 56 40"><g class="gst" transform="translate(8,-8)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g><g class="gst" transform="translate(4,-4)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g><g><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g></svg><span class="m"><b>}</b></span><span class="rw" data-g="R"><span class="m"><span class="ss"><span>N</span><span>i=1</span></span>)</span></span></div>
+        <div class="eqpair"><div class="eq" id="eqM"><span class="rw" data-g="R"><span id="rmL"><span class="m" style="color:var(--ai)">R<span class="ss"><span class="bs">(b)</span><span>m</span></span></span></span>&nbsp;<span class="m"><b>=</b> R(</span></span><span class="m"><b>{</b></span><svg class="trio" id="trM" viewBox="-1 -2 58 38"><g class="gst" transform="translate(9,4)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g><g class="gst" transform="translate(4.5,2)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g><g><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#ai" x="30" y="0" width="15" height="30" style="color:var(--ai)"/></g></svg><span class="m"><b>}</b></span><span class="rw" data-g="R"><span class="m"><span class="ss"><span>N</span><span>i=1</span></span>)</span></span></div><div class="eq" id="eqH"><span class="rw" data-g="R"><span id="rhL"><span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span>&nbsp;<span class="m"><b>=</b> R(</span></span><span class="m"><b>{</b></span><svg class="trio" id="trH" viewBox="-1 -2 58 38"><g class="gst" transform="translate(9,4)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g><g class="gst" transform="translate(4.5,2)" opacity="0"><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g><g><use href="#hu" x="0" y="0" width="15" height="30" style="color:var(--hu)"/><use href="#hu" x="15" y="0" width="15" height="30" opacity=".65" style="color:var(--hu)"/><use href="#hu" x="30" y="0" width="15" height="30" opacity=".4" style="color:var(--hu)"/></g></svg><span class="m"><b>}</b></span><span class="rw" data-g="R"><span class="m"><span class="ss"><span>N</span><span>i=1</span></span>)</span></span></div></div>
         <div class="gapbox" id="gapbox">
-          <div class="gl"><span class="rw" data-g="D"><span id="dL"><span class="m"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span> <span class="m"><b>=</b></span> </span><span class="slot" id="dRm"><span class="m" style="color:var(--ai)">R<span class="ss"><span class="bs">(b)</span><span>m</span></span></span></span><span class="rw" data-g="D"> <span class="m"><b>−</b></span> </span><span class="slot" id="dRh"><span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span></div>
-          <div class="gl"><span class="rw" data-g="E"><span id="eL"><span class="m">ε<span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span> <span class="m"><b>=</b> c <b>(1 −</b></span> </span><span class="slot" id="eRh"><span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span><span class="rw" data-g="E"><span class="m"><b>)</b></span></span></div>
-          <div class="gl"><span class="rw" data-g="A"><span id="aL"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>adj</span></span></span></span> <span class="m"><b>=</b></span> </span><span class="slot" id="aD"><span class="m"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span><span class="rw" data-g="A"> <span class="m"><b>+</b></span> </span><span class="slot" id="aE"><span class="m">ε<span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span></div>
+          <div class="gl"><span class="rw lhs" data-g="D"><span id="dL"><span class="m"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span> <span class="m"><b>=</b></span></span><span class="slot bslot" id="dRm"><span class="lab"><span class="m" style="color:var(--ai)">R<span class="ss"><span class="bs">(b)</span><span>m</span></span></span></span><svg class="bar" id="bRm"></svg></span><span class="rw op" data-g="D"><b>−</b></span><span class="slot bslot" id="dRh"><span class="lab"><span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span><svg class="bar" id="bRh"></svg></span></div>
+          <div class="gl"><span class="rw lhs" data-g="E"><span id="eL"><span class="m" style="color:var(--eps)">ε<span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span> <span class="m"><b>=</b></span></span><span class="slot bslot" id="eRh"><span class="lab labr"><span class="m">1 −</span> <span class="m" style="color:var(--hu)">R<span class="ss"><span class="bs">(b)</span><span>h</span></span></span></span><svg class="bar" id="bE"></svg></span><span class="rw op" data-g="E"><b>×</b></span><span class="rw bslot" data-g="E"><span class="lab"><span class="m">c</span></span><svg class="pie" id="pie" viewBox="-12 -12 24 24"></svg></span><span class="rw note" data-g="E">take <i class="m">c</i> = 10% of<br>human disagreement</span></div>
+          <div class="gl"><span class="rw lhs" data-g="A"><span id="aL"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>adj</span></span></span></span> <span class="m"><b>=</b></span></span><span class="slot bslot" id="aD"><span class="lab"><span class="m"><span class="hat">Δ</span><span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span><svg class="bar" id="bA"></svg></span><span class="rw op" data-g="A"><b>+</b></span><span class="slot bslot" id="aE"><span class="lab"><span class="m" style="color:var(--eps)">ε<span class="ss"><span class="bs">(b)</span><span>&nbsp;</span></span></span></span><svg class="bar" id="bS"></svg></span></div>
         </div>
-        <div class="cap" style="margin-top:auto"><span data-t="14500">collect over the <i class="m">B</i> repetitions:&nbsp;</span> <span class="rw" data-g="S"><span class="m"><b>{</b></span></span><span class="slot" id="sA"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span></span></span><span class="rw" data-g="S"><span class="m"><b>}</b><span class="ss"><span>B</span><span>b=1</span></span></span></span></div>
+      </div>
+
+      <div class="mid">
+        <span class="cap" data-t="14500">collect over the <i class="m">B</i> repetitions</span>
+        <div class="midset"><span class="rw" data-g="S"><span class="m"><b>{</b></span></span><span class="slot" id="sA"><span class="m" style="color:var(--gap)"><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span></span></span><span class="rw" data-g="S"><span class="m"><b>}</b><span class="ss"><span>B</span><span>b=1</span></span></span></span></div>
+        <svg class="midarr" data-t="14500" viewBox="0 0 80 12"><path d="M2 6H70" stroke="var(--line2)" stroke-width="2"/><path d="M68 1L78 6L68 11z" fill="var(--line2)"/></svg>
       </div>
 
       <div class="step s3" data-t="15100">
         <h3><i>3</i>Near-Worst Gap</h3>
         <p class="d">order the <i class="m">B</i> adjusted gaps and take the <i class="m">α</i>-quantile</p>
         <svg class="draw hist" id="hist" viewBox="0 0 240 140" role="img" aria-label="Distribution of bootstrap gaps with the 5% quantile above zero"></svg>
-        <div class="cap slide" data-t="31650">only <i class="m">α</i> = 5% of the gaps are lower</div>
-        <div class="cap slide" data-t="32150">the decision statistic:&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>=</b> Q<span class="ss"><span>&nbsp;</span><span>α</span></span><b>({</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span><b>)</b></span></div>
+        <div class="cap slide" data-t="30906">only <i class="m">α</i> = 5% of the gaps are lower</div>
+        <div class="cap slide" data-t="31406">the decision statistic:&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>=</b> Q<span class="ss"><span>&nbsp;</span><span>α</span></span><b>({</b><span class="hat">Δ</span><span class="ss"><span>(b)</span><span>adj</span></span><b>}</b><span class="ss"><span>B</span><span>b=1</span></span><b>)</b></span></div>
       </div>
 
-      <div class="step s4" data-t="32585">
+      <div class="step s4" data-t="33406">
         <h3><i>4</i>Decision</h3>
         <p class="d">pass if the decision statistic stays above zero</p>
-        <div class="big slide" data-t="33185">if&nbsp; <span class="m">q<span class="ss"><span>*</span><span>α</span></span> <b>&gt; 0</b></span></div>
-        <div class="cap slide" data-t="33785" style="color:#C9D7F0;font-size:14px">reject <span class="m">H<span class="ss"><span>&nbsp;</span><span>0</span></span><b>:</b> Δ <b>+</b> ε <b>≤ 0</b></span></div>
-        <div class="cap slide" data-t="34385">the gap stays inside the budget</div>
-        <div class="verdict" id="verdict"><svg id="vr" viewBox="0 0 20 40" style="color:var(--ai)"><use id="vrN" href="#ai"/><use id="vrS" href="#ais" opacity="0"/></svg><span id="vt">can replace</span><svg id="vh" viewBox="0 0 20 40" style="color:var(--hu)"><use href="#hu"/></svg><span id="vc" class="check">✓</span></div>
+        <div class="big slide" data-t="33300">if&nbsp; <span class="m"><span id="bq" style="opacity:0">q<span class="ss"><span>*</span><span>α</span></span></span> <b id="bgt" style="opacity:0">&gt; 0</b></span></div>
+        <div class="cap slide" data-t="34600" style="color:#C9D7F0;font-size:14px">reject <span class="m">H<span class="ss"><span>&nbsp;</span><span>0</span></span><b>:</b> Δ <b>+</b> ε <b>≤ 0</b></span></div>
+        <div class="cap slide" data-t="34700">the gap stays inside the budget</div>
+        <div class="verdict" id="verdict"><svg id="vr" viewBox="0 0 20 40" style="color:var(--ai)"><use id="vrN" href="#ai"/><use id="vrS" href="#ais" opacity="0"/></svg><span id="vt" class="vtc"><span>can replace</span><svg id="varr" viewBox="0 0 96 14"><path id="varrp" d="M92 7H12" stroke="var(--navt)" stroke-width="2.6" stroke-linecap="round"/><path id="varrh" d="M2 7L14 1V13z" fill="var(--navt)"/></svg></span><svg id="vh" viewBox="0 0 20 40" style="color:var(--hu)"><use href="#hu"/></svg><span id="vc" class="check">✓</span></div>
       </div>
     </div>
     <div class="flyers" aria-hidden="true">
@@ -512,16 +557,16 @@
     rounds.push(r); });
   /* B = 300: rounds 4..20 fast, skip 21..259 as a burst of points, then 260..300 fast; the last restores the original sample */
   R0.b = '1'; rounds[1].b = '2'; rounds[2].b = '3';
-  var t = 23100, FD = 90;
-  for (var bb=4; bb<=20; bb++){ var F=t; t+=FD;
-    rounds.push({S:F, b:String(bb), slow:false, src:sample(100+bb), token:[F,F+90], pulse:[F,F+70], items:[{t0:F, pick:(bb*3)%8, v:1+(bb%6), instant:true}], plot:[F+20,F+420]}); }
-  var lastFast = rounds[rounds.length-1], SKIP0 = t+60;
-  for (var i=0;i<16;i++){ var F = SKIP0+i*45;
-    rounds.push({S:F, b:'…', burst:true, slow:false, src:lastFast.src, pulse:[F,F], items:lastFast.items, plot:[F,F]}); }
-  function ffNum(t){ return 21 + Math.min(238, Math.floor(prog(t, SKIP0, SKIP_END)*239)); }
-  t = SKIP0 + 16*45 + 400; var SKIP_END = t - 40;
-  for (var bb=260; bb<=300; bb++){ var F=t; t+=75; var lst = (bb===300);
-    rounds.push({S:F, b:String(bb), slow:false, src: lst ? R0.src : sample(100+bb), token:[F,F+70], pulse:[F,F+60], items:[{t0:F, pick: lst ? 5 : (bb*3)%8, v: lst ? 0 : 1+(bb%6), instant:true}], plot:[F+20,F+420]}); }
+  var t = 23100;
+  for (var bb=4; bb<=40; bb++){ var F=t; t+=70;
+    rounds.push({S:F, b:String(bb), slow:false, src:sample(100+bb), token:[F,F+70], pulse:[F,F+55], items:[{t0:F, pick:(bb*3)%8, v:1+(bb%6), instant:true}], hop:[F-50,F+170], plot:[F+170,F+520]}); }
+  var SKIP0 = t;
+  for (var bb=41; bb<=298; bb++){ var F=t; t+=12;
+    rounds.push({S:F, b:String(bb), burst:true, slow:false, src:sample(100+bb), pulse:[F,F], items:[{t0:F, pick:(bb*3)%8, v:1+(bb%6), instant:true}], hop: (bb%12===0) ? [F,F+240] : null, plot:[F+170,F+450]}); }
+  var SKIP_END = t; t += 120;
+  function ffNum(t){ return +rounds[roundAt(t)].b; }
+  for (var bb=299; bb<=300; bb++){ var F=t; t+=300; var lst = (bb===300);
+    rounds.push({S:F, b: lst ? 'B' : 'B−1', slow:false, src: lst ? R0.src : sample(100+bb), token:[F,F+240], pulse:[F,F+200], items:[{t0:F, pick: lst ? 5 : (bb*3)%8, v: lst ? 0 : 1+(bb%6), instant:true}], hop:[F,F+230], plot:[F+230,F+560]}); }
   var N_DOTS = rounds.length;
   var ROUNDS_END = t;
   var CURVE0 = ROUNDS_END + 300, V0 = CURVE0 + 5700, END = V0 + 5600;
@@ -547,13 +592,15 @@
     if (clearing && R.items.length && t < R.items[0].t0){
       var f = 1-prog(t,R.clear[0],R.clear[1]); var pit = prev.items[prev.items.length-1], pv = VAR[pit.v];
       drawRow(pit, pv, 1e9, f); return; }
-    if (!it){ sel.setAttribute('opacity',0); trav.setAttribute('opacity',0); curve.setAttribute('opacity',0); curve.setAttribute('marker-end','');
+    if (!it){ swapA.style.opacity = 0; if (perArr) perArr.style.opacity = 0; sel.setAttribute('opacity',0); trav.setAttribute('opacity',0); curve.setAttribute('opacity',0); curve.setAttribute('marker-end','');
       if (ri === 0) swapA.setAttribute('stroke-dashoffset',swapLen);
       setRow(); return; }
     drawRow(it, VAR[it.v], t, 1);
   }
+  var perArr = fig.querySelector('#p1 path[d="M37 160H56"]');
   function drawRow(it, v, t, fade){
-    var px = slotS[it.pick][0], py = slotS[it.pick][1];
+    var px = slotS[it.pick][0], py = slotS[it.pick][1], dc = sdots[it.pick].getAttribute('fill') || 'var(--ai)';
+    sel.setAttribute('stroke', dc); trav.setAttribute('fill', dc); item.children[0].setAttribute('stroke', dc); item.children[1].setAttribute('fill', dc);
     sel.setAttribute('cx',px); sel.setAttribute('cy',py); sel.setAttribute('opacity', fade);
     placeCurve(px,py);
     var pc = it.instant ? 1 : ease(prog(t, it.travel[0], it.travel[1]));
@@ -561,14 +608,16 @@
     curve.setAttribute('opacity', fade);
     if (pc > 0 && pc < 1){ var pt = curve.getPointAtLength(curveLen*pc); trav.setAttribute('cx',pt.x); trav.setAttribute('cy',pt.y); trav.setAttribute('opacity',1); } else trav.setAttribute('opacity',0);
     item.setAttribute('opacity', pc >= 1 ? fade : 0);
+    var annOn = it.instant ? 1 : (it.intro ? 1 : ease(prog(t, it.ann[0], it.ann[1])));
+    if (perArr) perArr.style.opacity = (pc >= 1 ? fade*annOn : 0).toFixed(2); swapA.style.opacity = (fade*annOn).toFixed(2);
     /* three annotators: step in one by one for the walked-through item, appear together afterwards */
     H.forEach(function(h,i){
       var p = it.instant ? 1 : (it.intro ? back(prog(t, it.ann[0]+i*250, it.ann[0]+i*250+420)) : ease(prog(t, it.ann[0]+i*50, it.ann[1])));
       h.setAttribute('x', (HX[i] - (1-p)*16).toFixed(1)); h.style.color = v.c[i]; h.setAttribute('opacity', (clamp(p*1.4)*fade).toFixed(2));
     });
-    var ps = ease(prog(t, 4800, 5200)); swapA.setAttribute('stroke-dashoffset', (swapLen*(1-ps)).toFixed(1)); swapA.setAttribute('marker-end', ps>=1?'url(#ah)':'');
+    var ps = ease(prog(t, 5400, 5800)); swapA.setAttribute('stroke-dashoffset', (swapLen*(1-ps)).toFixed(1)); swapA.setAttribute('marker-end', ps>=1?'url(#ah)':'');
     /* the mixed panel: walks across for the first item, then appears with its row; one seat turns into the LLM */
-    var pm = it.intro ? ease(prog(t, 5100, 5800)) : 1, mOn = it.instant ? 1 : (it.intro ? (t >= 5100 ? 1 : 0) : ease(prog(t, it.ann[0], it.ann[1])));
+    var pm = it.intro ? ease(prog(t, 4700, 5350)) : 1, mOn = it.instant ? 1 : (it.intro ? (t >= 4700 ? 1 : 0) : ease(prog(t, it.ann[0], it.ann[1])));
     var q = it.instant ? 1 : ease(prog(t, it.swap[0], it.swap[1]));
     M.forEach(function(m,i){
       m.setAttribute('x', lerp(HX[i], MX[i], pm).toFixed(1)); m.setAttribute('y', 140 - Math.sin(pm*Math.PI)*16);
@@ -595,7 +644,8 @@
   var rwG = {}; [].slice.call(fig.querySelectorAll('.rw')).forEach(function(e){ (rwG[e.dataset.g] = rwG[e.dataset.g] || []).push(e); });
   var slots = {}; ['dRm','dRh','eRh','aD','aE','sA'].forEach(function(id){ slots[id] = $(id); });
   /* a flying copy of each slot */
-  var flyers = {}; Object.keys(slots).forEach(function(id){ var f = document.createElement('span'); f.className = 'slotfly'; f.innerHTML = slots[id].innerHTML; flyLayer.appendChild(f); flyers[id] = f; });
+  var FLYC = {dRm:'rmL', dRh:'rhL', eRh:'rhL', aD:'dL', aE:'eL', sA:'aL'};
+  var flyers = {}; Object.keys(slots).forEach(function(id){ var f = document.createElement('span'); f.className = 'slotfly'; f.innerHTML = $(FLYC[id]).innerHTML; flyLayer.appendChild(f); flyers[id] = f; });
   var SRC = {dRm:'rmL', dRh:'rhL', eRh:'rhL', aD:'dL', aE:'eL', sA:'aL'};
   var gapbox = $('gapbox');
   function setOp(list, o){ (list||[]).forEach(function(e){ e.style.opacity = o; }); }
@@ -604,10 +654,109 @@
     /* w = [arrive start, arrive end, rest end]; ids = slots that fly in */
     ids.forEach(function(id){ var p = prog(t, w[0], w[1]);
       slots[id].style.opacity = t >= w[1] ? 1 : 0;
-      if (p > 0 && p < 1){ var a = rel($(SRC[id])), b = rel(slots[id]); place(flyers[id], a, b, p, 18); } else flyers[id].style.opacity = 0; });
+      if (p > 0 && p < 1){ var a = rel($(SRC[id])), b = rel(slots[id].querySelector('.lab') || slots[id]); place(flyers[id], a, b, p, 18); } else flyers[id].style.opacity = 0; });
     return prog(t, w[1], w[2]);
   }
+
+  /* ---------- step 2 bars: loading bars of agree (✓) / disagree (✗) items ---------- */
+  var SW = 12, NS2 = 'http://www.w3.org/2000/svg';
+  function el(tag, at, par){ var e = document.createElementNS(NS2, tag); for (var k in at) e.setAttribute(k, at[k]); if (par) par.appendChild(e); return e; }
+  var clipN = 0;
+  function mkBar(svg, n, col, opt){
+    opt = opt || {}; var tot = opt.tot || 8, h = opt.h || 15, y0 = opt.y0 || 0, W = tot*SW, dark = opt.allDark;
+    if (!opt.keep){ svg.setAttribute('width', W); svg.setAttribute('height', y0+h); svg.setAttribute('viewBox', '0 0 '+W+' '+(y0+h)); }
+    var g = el('g', {}, svg), id = 'bc'+(clipN++);
+    el('rect', {x:0, y:y0, width:W, height:h, rx:h/2, fill:'var(--track)'}, g);
+    var cp = el('clipPath', {id:id}, g), cr = el('rect', {x:0, y:y0, width:0, height:h, rx:h/2}, cp);
+    var fg = el('g', {'clip-path':'url(#'+id+')'}, g);
+    var colR = dark ? null : el('rect', {x:0, y:y0, width:n*SW, height:h, fill:col}, fg);
+    var darkR = el('rect', {x:dark?0:n*SW, y:y0, width:dark?W:W-n*SW, height:h, fill:'var(--dk)'}, fg);
+    var marks = [];
+    for (var i=0;i<tot;i++){ var cx = (i+.5)*SW, cy = y0+h/2, ok = !dark && i<n;
+      marks.push(el('path', {d: ok ? 'M'+(cx-3.2)+' '+(cy+.2)+'L'+(cx-1)+' '+(cy+2.6)+'L'+(cx+3.4)+' '+(cy-2.8) : 'M'+(cx-2.6)+' '+(cy-2.6)+'L'+(cx+2.6)+' '+(cy+2.6)+'M'+(cx+2.6)+' '+(cy-2.6)+'L'+(cx-2.6)+' '+(cy+2.6),
+        fill:'none', stroke:'#fff', 'stroke-width':1.7, 'stroke-linecap':'round', 'stroke-linejoin':'round', opacity:0}, fg)); }
+    var fn = function(p, hide, hideD){ var w = W*clamp(p); cr.setAttribute('width', w.toFixed(1)); hide = hide || 0; hideD = hideD || 0;
+      marks.forEach(function(m,i){ m.setAttribute('opacity', (clamp((w-(i+.3)*SW)/(.5*SW))*(i < n ? 1-hide : 1-hideD)).toFixed(2)); });
+      darkR.setAttribute('opacity', (1-hideD).toFixed(2));
+      if (colR) colR.setAttribute('opacity', (1-hide).toFixed(2)); };
+    return fn;
+  }
+  var bRm = mkBar($('bRm'), 6, 'var(--ai)'), bRh = mkBar($('bRh'), 5, 'var(--hu)');
+  /* epsilon row: the human bar, a bracket over its disagreement part, then c = 10% of it */
+  var sE = $('bE'); sE.setAttribute('width', 8*SW); sE.setAttribute('height', 17); sE.setAttribute('viewBox', '0 6 '+8*SW+' 17');
+  var bE = mkBar(sE, 5, 'var(--hu)', {y0:8, keep:true});
+  var brk = el('path', {d:'M'+(5*SW+1)+' 7V2H'+(8*SW-1)+'V7', fill:'none', stroke:'var(--dk)', 'stroke-width':1.6, 'stroke-linejoin':'round'}, sE);
+  var bl = brk.getTotalLength ? 3*SW+10 : 60; brk.setAttribute('stroke-dasharray', bl);
+  var glow = el('rect', {x:5*SW-2.5, y:5.5, width:3*SW+4, height:20, rx:10, fill:'rgba(27,48,81,.10)', stroke:'var(--xring)', 'stroke-width':2.2, opacity:0}, sE);
+  var pie = $('pie'); el('circle', {r:10, fill:'rgba(91,143,219,.22)'}, pie);
+  var wedge = el('path', {d:'', fill:'var(--eps)'}, pie); el('circle', {r:10, fill:'none', stroke:'var(--pieo)', 'stroke-width':1.2}, pie);
+  function setPie(p){ var a = 2*Math.PI*.1*clamp(p); if (a <= 0){ wedge.setAttribute('d',''); return; }
+    wedge.setAttribute('d', 'M0 0L0 -10A10 10 0 0 1 '+(10*Math.sin(a)).toFixed(2)+' '+(-10*Math.cos(a)).toFixed(2)+'Z'); }
+  /* adjusted row: the two gap bars stacked, dashed lines mark the gap, plus the budget */
+  var sA2 = $('bA'); sA2.setAttribute('width', 8*SW); sA2.setAttribute('height', 27); sA2.setAttribute('viewBox', '0 0 '+8*SW+' 27');
+  var bA1 = mkBar(sA2, 6, 'var(--ai)', {h:12, keep:true}), bA2 = mkBar(sA2, 5, 'var(--hu)', {h:12, y0:15, keep:true});
+  var dsh = el('path', {d:'M'+5*SW+' -2V29M'+6*SW+' -2V29', stroke:'var(--ai)', 'stroke-width':1.8, 'stroke-dasharray':'3.5 2.5', opacity:0}, sA2);
+  /* D row: where the human bar ends is marked on the mixed bar, and the extra part is the gap */
+  var sM = $('bRm'); sM.style.overflow = 'visible';
+  var dmark = el('path', {d:'M'+5*SW+' -3V18', stroke:'var(--hu)', 'stroke-width':1.8, 'stroke-dasharray':'3 2.2', opacity:0}, sM);
+  var dseg = el('rect', {x:5*SW, y:-1.5, width:SW, height:18, rx:4, fill:'rgba(224,138,0,.22)', stroke:'var(--gap)', 'stroke-width':2, opacity:0}, sM);
+  /* E row: the disagreement part is cut down to c = 10% of it */
+  sE.style.overflow = 'visible';
+  var dim = el('rect', {x:5*SW, y:8, width:3*SW, height:15, fill:'var(--dimc)', opacity:0}, sE);
+  var keep = el('rect', {x:5*SW, y:8, width:3*SW, height:15, rx:3, fill:'var(--eps)', stroke:'var(--gap)', 'stroke-width':1.6, opacity:0}, sE);
+  var kl = el('text', {x:5*SW+6, y:19.2, 'font-size':9, 'font-weight':700, fill:'var(--eps)', opacity:0}, sE); kl.textContent = '10%';
+  /* epsilon itself in the A row: a small blue piece */
+  var sS = $('bS'); sS.setAttribute('width', 3*SW); sS.setAttribute('height', 15); sS.setAttribute('viewBox', '0 0 '+3*SW+' 15'); sS.style.overflow = 'visible';
+  var epsG = el('g', {opacity:0}, sS);
+  el('rect', {x:0, y:0, width:3*SW, height:15, rx:7.5, fill:'var(--dk)'}, epsG);
+  for (var i=0;i<3;i++){ var cx = (i+.5)*SW; el('path', {d:'M'+(cx-2.6)+' 4.9L'+(cx+2.6)+' 10.1M'+(cx+2.6)+' 4.9L'+(cx-2.6)+' 10.1', stroke:'#fff', 'stroke-width':1.7, 'stroke-linecap':'round'}, epsG); }
+  el('rect', {x:9, y:0, width:3*SW-9, height:15, fill:'var(--dimc)', opacity:.72}, epsG);
+  el('rect', {x:0, y:0, width:9, height:15, rx:3.5, fill:'var(--dk)', stroke:'var(--gap)', 'stroke-width':2.2}, epsG);
+  /* A row: the gap between the dashed lines, then epsilon is added on top of it */
+  sA2.style.overflow = 'visible';
+  var aseg = el('rect', {x:5*SW, y:-2, width:SW, height:16, rx:4, fill:'rgba(224,138,0,.18)', stroke:'var(--gap)', 'stroke-width':1.8, opacity:0}, sA2);
+  var aeps = el('rect', {x:6*SW+1, y:0, width:0, height:12, rx:3, fill:'var(--dk)', stroke:'var(--gap)', 'stroke-width':1.8}, sA2);
+
+  /* each R is one number: its colored part fills first (the value), then the dark rest is 1 - R */
+  function two(d, n){ var f = n/8; return d < .65 ? f*ease(d/.65) : f + (1-f)*ease((d-.65)/.35); }
+  /* the dark part of the R_h bar (1 - R_h, the human disagreement) is lifted down into the epsilon row */
+  var pill = document.createElement('span'); pill.className = 'flyer dpill'; pill.innerHTML = '<i>✕</i><i>✕</i><i>✕</i>'; flyLayer.appendChild(pill);
+  /* A row: the two colored parts leave the D row and are stacked into Delta-hat */
+  function cpill(col, n){ var p = document.createElement('span'); p.className = 'flyer cpill'; p.style.background = col;
+    var h = ''; for (var i=0;i<n;i++) h += '<i>\u2713</i>'; p.innerHTML = h; flyLayer.appendChild(p); return p; }
+  var cpM = cpill('var(--ai)', 6), cpH = cpill('var(--hu)', 5);
+  var sH = $('bRh'); sH.style.overflow = 'visible';
+  var hring = el('rect', {x:5*SW-1, y:-1.5, width:3*SW+2, height:18, rx:9, fill:'none', stroke:'var(--gap)', 'stroke-width':2, opacity:0}, sH);
+  /* D row: ring the colored (check) parts, the two numbers being compared */
+  var cringM = el('rect', {x:-2.5, y:-2.5, width:6*SW+4, height:20, rx:10, fill:'rgba(214,51,108,.10)', stroke:'var(--ai)', 'stroke-width':2.2, opacity:0}, sM);
+  var cringH = el('rect', {x:-2.5, y:-2.5, width:5*SW+4, height:20, rx:10, fill:'rgba(47,111,208,.10)', stroke:'var(--hu)', 'stroke-width':2.2, opacity:0}, sH);
+  var lhs = {}; ['D','E','A'].forEach(function(g){ lhs[g] = fig.querySelector('.rw.lhs[data-g="'+g+'"]'); });
+  function ops(g){ return (rwG[g]||[]).filter(function(e){ return !e.classList.contains('lhs'); }); }
+  var cpM2 = cpill('var(--ai)', 6), cpH2 = cpill('var(--hu)', 5), dfc = cpill('var(--ai)', 1);
+  var pill2 = document.createElement('span'); pill2.className = 'flyer dpill'; pill2.innerHTML = pill.innerHTML; flyLayer.appendChild(pill2);
+  var echip = document.createElement('span'); echip.className = 'flyer echip'; flyLayer.appendChild(echip);
+  var pcopy = document.createElement('span'); pcopy.className = 'flyer'; pcopy.style.zIndex = 3; pcopy.innerHTML = '<svg viewBox="-12 -12 24 24" width="100%" height="100%" style="display:block"><circle r="10" fill="rgba(91,143,219,.22)"/><path d="M0 0L0 -10A10 10 0 0 1 5.88 -8.09Z" fill="#5B8FDB"/><circle r="10" fill="none" stroke="var(--pieo)" stroke-width="1.2"/></svg>'; flyLayer.appendChild(pcopy);
+  var bang = document.createElement('span'); bang.className = 'flyer'; bang.style.cssText += ';width:28px;height:28px;border-radius:50%;border:2px solid var(--eps);box-shadow:0 0 12px rgba(91,143,219,.55);z-index:3'; flyLayer.appendChild(bang);
+  function bars(d, e, br, pc, a, dq, gl, ds, ea, hb, xd, ef, hM, hH){
+    if (ds === undefined) ds = 1; if (ea === undefined) ea = 1; if (hb === undefined) hb = 1; if (xd === undefined) xd = 1; if (ef === undefined) ef = 1; hM = hM || 0; hH = hH || 0;
+    var cr = clamp((d-.6)/.12)*(1-clamp((ds-.85)/.15)); cringM.setAttribute('opacity', cr.toFixed(2)); cringH.setAttribute('opacity', cr.toFixed(2));
+    bRm(two(d,6), hM, ease(clamp(xd))); bRh(two(d,5), hH, ease(clamp(xd))); bE(e, ease(clamp(hb)));
+    dmark.setAttribute('opacity', 0);
+    dseg.setAttribute('opacity', 0); dseg.setAttribute('width', (SW*ease(clamp((ds-.35)/.4))).toFixed(1));
+    brk.setAttribute('opacity', 0);
+    glow.setAttribute('opacity', (gl > 0 && gl < 1 ? .9*clamp(gl*4) : 0).toFixed(2));
+    var kw = 3*SW*(1 - .9*ease(clamp(pc)));
+    keep.setAttribute('width', kw.toFixed(1)); keep.setAttribute('opacity', 0);
+    dim.setAttribute('x', (5*SW+kw).toFixed(1)); dim.setAttribute('width', (3*SW-kw).toFixed(1)); dim.setAttribute('opacity', 0);
+    kl.setAttribute('x', (5*SW+kw+3).toFixed(1)); kl.setAttribute('opacity', 0);
+    setPie(pc); bA1(a, 0, 1); bA2(a, 0, 1);
+    dsh.setAttribute('opacity', clamp(dq).toFixed(2)); aseg.setAttribute('opacity', clamp(dq).toFixed(2));
+    aseg.setAttribute('width', SW); aeps.setAttribute('opacity', 0);
+    epsG.setAttribute('opacity', ease(clamp(ef)).toFixed(2)); }
+  var midEl = fig.querySelector('.mid'), s3El = fig.querySelector('.step.s3');
   function panel2(t){
+    var lnO = ease(prog(t, 14300, 14700)); midEl.style.borderLeftColor = s3El.style.borderLeftColor = 'rgba(27,48,81,'+(.22*lnO).toFixed(3)+')';
+    pill.style.opacity = 0; hring.setAttribute('opacity', 0); cpM.style.opacity = 0; cpH.style.opacity = 0; pie.style.transform = 'none'; pie.style.opacity = 1; cpM2.style.opacity = 0; cpH2.style.opacity = 0; pill2.style.opacity = 0; echip.style.opacity = 0; pcopy.style.opacity = 0; bang.style.opacity = 0; dfc.style.opacity = 0;
     var ri = roundAt(t), R = rounds[ri];
     var clearF = (R.clear && t < R.clear[1]) ? 1-prog(t,R.clear[0],R.clear[1]) : 1;
     /* panels fold into the braces, one pair per item; the braces stack up as items accumulate */
@@ -617,7 +766,8 @@
     if (inClear){ landed = rounds[ri-1].items.length; }
     var trOn = landed > 0 ? clearF : 0;
     trH.style.opacity = trOn; trM.style.opacity = trOn;
-    gstH.concat(gstM).forEach(function(g,i){ var lvl = i%2===0 ? 2 : 1; g.setAttribute('opacity', landed > lvl ? .35/lvl : 0); });
+    var full = (ri > 0 && landed > 0) || !R.slow;
+    gstH.concat(gstM).forEach(function(g,i){ var lvl = i%2===0 ? 2 : 1; g.setAttribute('opacity', (landed > lvl || full) ? (.34/lvl).toFixed(2) : 0); });
     if (flying){ var pf = prog(t, flying.fold[0], flying.fold[1]), v = VAR[flying.v];
       colorFlyer(fH, v, false); colorFlyer(fM, v, true);
       var hb = rel(H[0]), he = rel(H[2]), mb = rel(M[0]), me = rel(M[2]);
@@ -626,29 +776,94 @@
     } else { fH.style.opacity = 0; fM.style.opacity = 0; }
     if (!R.slow){ setOp(rwG.R,1); setOp(rwG.D,1); setOp(rwG.E,1); setOp(rwG.A,1); setOp(rwG.S,1);
       Object.keys(slots).forEach(function(id){ slots[id].style.opacity = 1; flyers[id].style.opacity = 0; });
+      bars(1,1,1,1,1,1,0);
       gapbox.style.opacity = 1; gapbox.classList.toggle('pulse', R.burst ? (Math.floor(t/50)%2===0) : t < R.pulse[1]); return; }
     gapbox.classList.remove('pulse');
     if (inClear){ setOp(rwG.R,clearF); setOp(rwG.D,clearF); setOp(rwG.E,clearF); setOp(rwG.A,clearF);
       ['dRm','dRh','eRh','aD','aE'].forEach(function(id){ slots[id].style.opacity = clearF; flyers[id].style.opacity = 0; });
-      setOp(rwG.S,1); slots.sA.style.opacity = 1; flyers.sA.style.opacity = 0; return; }
+      setOp(rwG.S,1); slots.sA.style.opacity = 1; flyers.sA.style.opacity = 0; bars(1,1,1,1,1,1,0); return; }
     /* the R formulas are written only once the per-item pass is finished */
     setOp(rwG.R, ease(prog(t, R.rw[0], R.rw[1])));
-    gapbox.style.opacity = ri === 0 ? ease(prog(t, 11300, 11500)) : 1;
-    setOp(rwG.D, line(t, R.D, ['dRm','dRh']));
-    setOp(rwG.E, line(t, R.E, ['eRh']));
-    setOp(rwG.A, line(t, R.A, ['aD','aE']));
+    var u0 = R.rw[1], U = (R.set[0]-50-u0)/9400; function T(x){ return u0 + x*U; }
+    gapbox.style.opacity = ri === 0 ? ease(prog(t, T(-150), T(50))) : 1;
+    /* D row: the two R bars, their x parts go, R_m is laid on R_h and only the difference is left, which becomes Delta-hat */
+    setOp(ops('D'), ease(prog(t, T(0), T(400)))); line(t, [T(0), T(400), T(400)], ['dRm','dRh']);
+    lhs.D.style.opacity = ease(prog(t, T(2600), T(2750)));
+    /* E row: the human bar, its check part goes, the disagreement is copied into c, which leaves epsilon */
+    ops('E').forEach(function(e){ var w = e.classList.contains('note') ? [T(5530), T(5750)] : (e.classList.contains('bslot') ? [T(5050), T(5200)] : [T(3700), T(4100)]); e.style.opacity = ease(prog(t, w[0], w[1])).toFixed(2); });
+    /* R_h jumps down from its equation, then "1 -" is written in front of it */
+    var eLab = slots.eRh.querySelector('.lab'), ePre = eLab.children[0], eRs = eLab.children[1], efp = prog(t, T(3700), T(4100));
+    /* R_h lands, then slides right while "1 -" grows in front of it: R_h turns into 1 - R_h */
+    var ek = ease(prog(t, T(4150), T(4420))), pw = ePre.offsetWidth + 4;
+    slots.eRh.style.opacity = t >= T(4100) ? 1 : 0; ePre.style.opacity = ek.toFixed(2);
+    ePre.style.display = 'inline-block'; ePre.style.transformOrigin = '100% 60%'; ePre.style.transform = 'scale('+(.4+.6*ek).toFixed(2)+')';
+    eRs.style.display = 'inline-block'; eRs.style.transform = 'translateX('+(-pw*(1-ek)/2).toFixed(1)+'px)';
+    if (efp > 0 && efp < 1) place(flyers.eRh, rel($('rhL')), rel(eRs), efp, 18); else flyers.eRh.style.opacity = 0;
+    lhs.E.style.opacity = ease(prog(t, T(6400), T(6550)));
+    /* A row: Delta-hat arrives first, epsilon later, then the adjusted gap is written */
+    setOp(ops('A'), ease(prog(t, T(2850), T(3050))));
+    slots.aD.style.opacity = t >= T(3200) ? 1 : 0; flyers.aD.style.opacity = 0;
+    slots.aE.style.opacity = t >= T(6950) ? 1 : 0; flyers.aE.style.opacity = 0;
+    lhs.A.style.opacity = ease(prog(t, T(7950), T(8150)));
+    var sk = prog(t, T(2000), T(2250)), back3 = prog(t, T(2650), T(2900));
+    bars(prog(t, T(400), T(1000)), two(prog(t, T(4350), T(4850)), 5), 0, prog(t, T(5280), T(5530)),
+         t >= T(3200) ? 1 : 0, prog(t, T(3200), T(3450)), prog(t, T(4880), T(6000)), prog(t, T(1500), T(1700)), prog(t, T(7000), T(7450)),
+         prog(t, T(4850), T(5050)), prog(t, T(1300), T(1600)), t >= T(6950) ? 1 : 0,
+         .6*(prog(t, T(1650), T(1750)) - back3), .75*(ease(sk) - back3));
+    var bm = rel(sM), bh = rel(sH), s1 = bm.w/(8*SW), sc = bh.w/(8*SW), ba = rel(sA2), s3 = ba.w/(8*SW), ld = rel(lhs.D), le = rel(lhs.E);
+    /* R_m slides onto R_h, the shared part cancels, one check is left */
+    var mv = prog(t, T(1700), T(2000)), jp = prog(t, T(2300), T(2600));
+    if (mv > 0 && mv < 1) place(cpM, {x:bm.x, y:bm.y, w:6*SW*s1, h:bm.h}, {x:bh.x, y:bh.y, w:6*SW*sc, h:bh.h}, mv, 18, true);
+    else if (t >= T(2000) && t < T(2300)){ var k = ease(sk); cpM.style.opacity = 1;
+      cpM.style.transform = 'translate('+(bh.x+5*SW*sc*k).toFixed(1)+'px,'+bh.y.toFixed(1)+'px)'; cpM.style.width = ((6-5*k)*SW*sc).toFixed(1)+'px'; cpM.style.height = bh.h.toFixed(1)+'px'; }
+    else if (jp > 0 && jp < 1){ place(cpM, {x:bh.x+5*SW*sc, y:bh.y, w:SW*sc, h:bh.h}, {x:ld.x+ld.w*.3, y:ld.y+ld.h*.25, w:SW*sc*.8, h:bh.h*.8}, jp, 30, true); if (jp > .8) cpM.style.opacity = ((1-jp)/.2).toFixed(2); }
+    /* Delta-hat hands its two bars down to the adjusted row */
+    var j2 = prog(t, T(2900), T(3200));
+    if (j2 > 0 && j2 < 1){ place(cpM2, {x:ld.x+ld.w*.3, y:ld.y+ld.h*.3, w:14, h:6}, {x:ba.x, y:ba.y, w:6*SW*s3, h:12*s3}, j2, 22, true);
+      place(cpH2, {x:ld.x+ld.w*.3, y:ld.y+ld.h*.5, w:12, h:6}, {x:ba.x, y:ba.y+15*s3, w:5*SW*s3, h:12*s3}, j2, 22, true); }
+    /* the disagreement is copied into c, c keeps 10% of it: that is epsilon */
+    /* c: the empty circle pops in, then its 10% slice fills */
+    var pc0 = back(prog(t, T(5050), T(5280))); pie.style.transformOrigin = '50% 50%'; pie.style.transform = 'scale('+Math.max(.01, pc0).toFixed(2)+')'; pie.style.opacity = clamp(pc0*2).toFixed(2);
+    /* the disagreement and c run into each other, and epsilon comes out where they meet */
+    var be = rel(sE), sc2 = be.w/(8*SW), pr = rel(pie), dp = prog(t, T(5580), T(5850));
+    var xs = {x:be.x+5*SW*sc2, y:be.y+2*sc2, w:3*SW*sc2, h:15*sc2}, mx = (xs.x+xs.w + pr.x)/2, my = (xs.y+xs.h/2 + pr.y+pr.h/2)/2;
+    if (dp > 0 && dp < 1){ var dd = ease(dp);
+      place(pill2, xs, {x:mx-xs.w*.5, y:my-xs.h*.5, w:xs.w, h:xs.h}, dp, .001, true);
+      place(pcopy, {x:pr.x, y:pr.y, w:pr.w, h:pr.h}, {x:mx-pr.w*.5, y:my-pr.h*.5, w:pr.w, h:pr.h}, dp, .001, true); }
+    var cr2 = prog(t, T(5850), T(5980));
+    if (cr2 > 0 && cr2 < 1){ pill2.style.opacity = pcopy.style.opacity = (1-cr2).toFixed(2);
+      pill2.style.transform = 'translate('+(mx-xs.w*.5).toFixed(1)+'px,'+(my-xs.h*.5).toFixed(1)+'px) scale('+(1-.6*cr2).toFixed(2)+')';
+      pcopy.style.transform = 'translate('+(mx-pr.w*.5).toFixed(1)+'px,'+(my-pr.h*.5).toFixed(1)+'px) scale('+(1-.6*cr2).toFixed(2)+')';
+      bang.style.opacity = (1-cr2).toFixed(2); bang.style.transform = 'translate('+(mx-14).toFixed(1)+'px,'+(my-14).toFixed(1)+'px) scale('+(.4+1.2*cr2).toFixed(2)+')'; }
+    var c1 = prog(t, T(6150), T(6400)), c2 = prog(t, T(6700), T(6950)), bs = rel(sS);
+    if (t >= T(5880) && t < T(6150)){ var pop = back(prog(t, T(5880), T(6060))); echip.style.opacity = 1; echip.style.width = '5px'; echip.style.height = '14px';
+      echip.style.transform = 'translate('+(mx-2.5).toFixed(1)+'px,'+(my-7).toFixed(1)+'px) scale('+Math.max(.01,pop).toFixed(2)+')'; }
+    else if (c1 > 0 && c1 < 1) place(echip, {x:mx-2.5, y:my-7, w:5, h:14}, {x:le.x+le.w*.3, y:le.y+le.h*.2, w:5, h:14}, c1, 24, true);
+    else if (c2 > 0 && c2 < 1) place(echip, {x:le.x+le.w*.3, y:le.y+le.h*.2, w:5, h:14}, {x:bs.x, y:bs.y, w:9*bs.w/(3*SW), h:bs.h}, c2, 24, true);
+    /* Delta-hat + epsilon: the difference part and the epsilon part meet at the plus, then become Delta-adj */
+    var m1 = prog(t, T(7000), T(7450)), m2 = prog(t, T(7600), T(7950)), plusR = rel(ops('A')[0]), la = rel(lhs.A);
+    var dS = {x:ba.x+5*SW*s3, y:ba.y, w:SW*s3, h:12*s3}, eW = 9*bs.w/(3*SW), eS = {x:bs.x, y:bs.y, w:eW, h:bs.h};
+    var Mx = plusR.x+plusR.w/2, My = plusR.y+plusR.h/2;
+    var dM = {x:Mx-dS.w, y:My-dS.h/2, w:dS.w, h:dS.h}, eM = {x:Mx, y:My-eS.h/2, w:eW, h:eS.h};
+    if (m1 > 0 && m1 < 1){ place(dfc, dS, dM, m1, 14, true); place(echip, eS, eM, m1, 14, true); }
+    else if (t >= T(7450) && t < T(7600)){ var pz = 1+.15*Math.sin(Math.PI*prog(t, T(7450), T(7600)));
+      [[dfc, dM], [echip, eM]].forEach(function(z){ z[0].style.opacity = 1; z[0].style.width = z[1].w.toFixed(1)+'px'; z[0].style.height = z[1].h.toFixed(1)+'px';
+        z[0].style.transformOrigin = (z[0] === dfc ? '100% 50%' : '0 50%'); z[0].style.transform = 'translate('+z[1].x.toFixed(1)+'px,'+z[1].y.toFixed(1)+'px) scale('+pz.toFixed(2)+')'; }); }
+    else if (m2 > 0 && m2 < 1){ var tx = la.x+la.w*.35, ty = la.y+la.h*.3;
+      place(dfc, dM, {x:tx-dS.w*.7, y:ty, w:dS.w*.7, h:dS.h*.7}, m2, 26, true); place(echip, eM, {x:tx, y:ty, w:eW*.7, h:eS.h*.7}, m2, 26, true);
+      if (m2 > .8){ dfc.style.opacity = echip.style.opacity = ((1-m2)/.2).toFixed(2); } }
     var sOp = line(t, R.set, ['sA']);
     if (ri > 0){ setOp(rwG.S, 1); slots.sA.style.opacity = 1; } else setOp(rwG.S, sOp);
   }
 
   /* ================= step 3: each round's gap flies from the set and becomes one dot ================= */
-  var mu = .035, sd = .018;
+  var mu = .056, sd = .024;
   function qn(p){ return 4.91*(Math.pow(p,.14)-Math.pow(1-p,.14)); }
   var vals = []; for (var i=0;i<N_DOTS;i++) vals.push(mu + sd*qn((i+.5)/N_DOTS));
   var qstar = vals[Math.floor(.05*N_DOTS)-1];
   seed = 3; var order = vals.map(function(v,i){ return i; });
   for (var i=N_DOTS-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=order[i]; order[i]=order[j]; order[j]=tmp; }
-  var lo=-.03, hi=.1, X0=10, X1=230, Y=112, bw=.004, dy=5.2;
+  var lo=-.03, hi=.12, X0=10, X1=230, Y=112, bw=.0028, dy=3.3;
   function xs(v){ return X0 + (v-lo)/(hi-lo)*(X1-X0); }
   var bins = {}, pos = [];
   order.forEach(function(idx,k){ var v=vals[idx]; var b=Math.floor((v-lo)/bw); bins[b]=(bins[b]||0)+1; pos.push({v:v, x:xs(lo+(b+.5)*bw), y:Y-4-(bins[b]-1)*dy, k:k}); });
@@ -658,51 +873,84 @@
   var xq = xs(qstar), x0 = xs(0);
   tail += 'L'+xq.toFixed(1)+' '+(Y-pdf(qstar)*sc).toFixed(1)+'L'+xq.toFixed(1)+' '+Y+'L'+X0+' '+Y+'Z';
   $('hist').innerHTML =
-    '<path id="htail" d="'+tail+'" fill="rgba(255,176,87,.28)" opacity="0"/>'+
+    '<path id="htail" d="'+tail+'" fill="rgba(255,176,87,.45)" opacity="0"/>'+
     '<line x1="'+X0+'" y1="'+Y+'" x2="'+X1+'" y2="'+Y+'" stroke="rgba(176,193,224,.45)" stroke-width="1.2"/>'+
     '<line x1="'+x0+'" y1="'+Y+'" x2="'+x0+'" y2="'+(Y+5)+'" stroke="rgba(176,193,224,.6)"/><text x="'+x0+'" y="'+(Y+17)+'" text-anchor="middle" font-size="12">0</text>'+
     '<g id="hdots"></g><g id="hrip"></g>'+
     '<path id="hcurve" d="'+path+'" fill="none" stroke="var(--gap)" stroke-width="1.8"/>'+
     '<line id="qline" x1="'+xq+'" y1="'+Y+'" x2="'+xq+'" y2="'+Y+'" stroke="var(--gap)" stroke-width="1.6"/>'+
+    '<text id="tlab" x="'+(xq-7)+'" y="'+(Y-16)+'" text-anchor="end" font-size="10.5" font-weight="600" style="fill:var(--gap)" opacity="0">5%</text>'+
     '<text id="qlab" x="'+xq+'" y="28" text-anchor="middle" font-size="14" font-family="STIX Two Text,serif" font-style="italic" style="fill:var(--gap)" opacity="0">q<tspan dy="-6" font-size="10">*</tspan><tspan dx="-5" dy="10" font-size="10">α</tspan></text>'+
     '<text x="'+X1+'" y="'+(Y+17)+'" text-anchor="end" font-size="13" font-family="STIX Two Text,serif" font-style="italic">Δ<tspan dy="4" font-size="10">adj</tspan></text>';
-  var hd = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','2.4'); c.setAttribute('cx',p.x.toFixed(1)); c.setAttribute('cy',p.y); $('hdots').appendChild(c); return c; });
+  var hd = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('r','1.6'); c.setAttribute('cx',p.x.toFixed(1)); c.setAttribute('cy',p.y); $('hdots').appendChild(c); return c; });
   var rips = pos.map(function(p){ var c=document.createElementNS(NS,'circle'); c.setAttribute('cx',p.x.toFixed(1)); c.setAttribute('cy',p.y); c.setAttribute('fill','none'); c.setAttribute('stroke','var(--gap)'); c.setAttribute('stroke-width','1.2'); c.setAttribute('opacity',0); $('hrip').appendChild(c); return c; });
   var hcurve = $('hcurve'), hlen = hcurve.getTotalLength(); hcurve.setAttribute('stroke-dasharray', hlen);
-  var pool = []; for (var i=0;i<12;i++){ var g=document.createElement('span'); g.className='flyer gdot'; flyLayer.appendChild(g); pool.push(g); }
+  var pool = []; for (var i=0;i<96;i++){ var g=document.createElement('span'); g.className='flyer gdot'; flyLayer.appendChild(g); pool.push(g); }
+  var pool2 = [], TOK = $('aL').innerHTML.replace(/<span class="bs">\([^)]*\)<\/span>/, '<span class="bs">(__B__)</span>'), BUR0 = 0; while (BUR0 < rounds.length && !rounds[BUR0].burst) BUR0++; for (var i=0;i<24;i++){ var g=document.createElement('span'); g.className='slotfly tokfly'; flyLayer.appendChild(g); pool2.push(g); }
   function panel3(t){
-    hd.forEach(function(c,i){ var R = rounds[i], fall = R.burst ? 420 : (R.slow ? 340 : 240), top = R.burst ? -8 : 8;
+    hd.forEach(function(c,i){ var R = rounds[i], fall = 60, top = 8;
       var f0 = R.plot[1], land = f0 + fall, fp = prog(t, f0, land), on = t >= land, pop = back(prog(t, land, land+260));
       /* the point rains down from above the plot into its place */
-      c.setAttribute('cy', lerp(top, pos[i].y, fp*fp).toFixed(1));
-      c.setAttribute('opacity', t >= f0 ? .9 : 0); c.setAttribute('r', on ? (2.4*Math.max(pop,.4)).toFixed(2) : 2.4);
+      c.setAttribute('cy', pos[i].y);
+      c.setAttribute('opacity', t >= f0 ? .9 : 0); var tailOn = (pos[i].v <= qstar && t >= CURVE0+2300); c.setAttribute('r', on ? ((tailOn?2.1:1.6)*Math.max(pop,.4)).toFixed(2) : 1.6);
       var rp = prog(t, land, land+(R.slow?520:360));
       rips[i].setAttribute('r', (3+rp*9).toFixed(1)); rips[i].setAttribute('opacity', (rp>0&&rp<1) ? ((1-rp)*.8).toFixed(2) : 0);
-      c.setAttribute('fill', (pos[i].v <= qstar && t >= CURVE0+1300) ? 'var(--gap)' : 'var(--hu)'); });
+      c.setAttribute('fill', (pos[i].v <= qstar && t >= CURVE0+2300) ? 'var(--gap)' : 'var(--hu)'); });
     hcurve.setAttribute('stroke-dashoffset', (hlen*(1-ease(prog(t,CURVE0,CURVE0+900)))).toFixed(1));
-    $('htail').setAttribute('opacity', ease(prog(t,CURVE0+1300,CURVE0+1800)).toFixed(2));
-    $('qline').setAttribute('y2', lerp(Y, 34, ease(prog(t,CURVE0+1600,CURVE0+2200))).toFixed(1));
-    $('qlab').setAttribute('opacity', ease(prog(t,CURVE0+2100,CURVE0+2400)).toFixed(2));
+    $('htail').setAttribute('opacity', ease(prog(t,CURVE0+2300,CURVE0+2800)).toFixed(2));
+    $('qline').setAttribute('y2', lerp(Y, 34, ease(prog(t,CURVE0+2600,CURVE0+3200))).toFixed(1));
+    $('qlab').setAttribute('opacity', ease(prog(t,CURVE0+3100,CURVE0+3400)).toFixed(2));
+    $('tlab').setAttribute('opacity', ease(prog(t,CURVE0+2800,CURVE0+3100)).toFixed(2));
     /* gap tokens in flight: from the set in step 2 to the dot they become */
     var ri = roundAt(t), hs = rel($('hist')), s = hs.w/240, src = rel(slots.sA), used = 0;
     pool.forEach(function(g){ g.style.opacity = 0; });
     var launch = 0;
-    for (var j = Math.max(0,ri-10); j <= Math.min(N_DOTS-1,ri+1) && used < pool.length; j++){
+    for (var j = Math.max(0,ri-95); j <= Math.min(N_DOTS-1,ri+1) && used < pool.length; j++){
       var p = prog(t, rounds[j].plot[0], rounds[j].plot[1]);
       if (p > 0 && p < 1){ var dp = pos[j], g = pool[used++];
         if (p < .18) launch = Math.max(launch, 1-p/.18);
-        place(g, {x:src.x+src.w*.4, y:src.y+2}, {x:hs.x+dp.x*s-5, y:hs.y+8*s-5}, p, rounds[j].slow ? 80 : 52);
+        place(g, {x:src.x+src.w*.4, y:src.y+2}, {x:hs.x+dp.x*s-5, y:hs.y+dp.y*s-5}, p, rounds[j].slow ? 80 : 52);
         /* a jump: stretch on take-off, round in the air, squash as it lands */
         var sq = p < .2 ? 1+.35*(1-p/.2) : 1;
         g.style.transform += ' scale('+(2-sq).toFixed(2)+','+sq.toFixed(2)+')'; }
     }
+    /* first hop: each round's Delta-adj (the token itself) flies from step 2 into the collected list */
+    var aSrc = rel($('aL')), used2 = 0, landP = 0;
+    pool2.forEach(function(g){ g.style.opacity = 0; });
+    for (var j = Math.max(0,ri-60); j <= Math.min(N_DOTS-1,ri+1) && used2 < pool2.length; j++){
+      if (!rounds[j].hop) continue;
+      var p = prog(t, rounds[j].hop[0], rounds[j].hop[1]);
+      if (p > 0 && p < 1){ var g = pool2[used2++], lab = rounds[j].b;
+        if (g._lab !== lab){ g.innerHTML = TOK.replace('__B__', lab); g._lab = lab; }
+        if (p > .75) landP = Math.max(landP, (p-.75)/.25);
+        var e = ease(p), u = 1-e, gb = rel(gapbox), yb = gb.y+gb.h+14, x0 = aSrc.x, y0 = aSrc.y, x3 = src.x, y3 = src.y;
+        var bx = u*u*u*x0 + 3*u*u*e*x0 + 3*u*e*e*x3 + e*e*e*x3, by = u*u*u*y0 + 3*u*u*e*yb + 3*u*e*e*yb + e*e*e*y3;
+        g.style.transform = 'translate('+bx.toFixed(1)+'px,'+by.toFixed(1)+'px)';
+        g.style.transform += ' scale('+(1-.15*ease(p)).toFixed(2)+')';
+        g.style.opacity = (p > .85 ? (1-p)/.15 : 1).toFixed(2); }
+    }
+    launch = Math.max(launch, landP);
     slots.sA.style.transform = launch > 0 ? 'scale('+(1+.18*launch).toFixed(2)+')' : '';
   }
 
   /* ================= step 4: the LLM knocks the human out, then the human walks back ================= */
   var vr = $('vr'), vh = $('vh'), vt = $('vt'), vc = $('vc'), verdict = $('verdict');
+  var qfly = document.createElement('span'); qfly.className = 'flyer'; qfly.style.cssText += ';color:var(--gap);font-size:20px;white-space:nowrap;z-index:3';
+  qfly.innerHTML = '<span class="m">q<span class="ss"><span>*</span><span>α</span></span></span>'; flyLayer.appendChild(qfly);
+  var bigQ = $('bq'), bigG = $('bgt');
+  var vbox = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); vbox.setAttribute('preserveAspectRatio', 'none');
+  vbox.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;overflow:visible;pointer-events:none';
+  vbox.innerHTML = '<rect id="vboxR" x="1.5" y="1.5" rx="10" fill="none" stroke="var(--boxs)" stroke-width="2" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>';
+  $('verdict').insertBefore(vbox, $('verdict').firstChild);
   function panel4(t){
-    verdict.style.opacity = ease(prog(t, V0, V0+150));
+    var vR = $('vboxR'), vhh = $('verdict').offsetHeight, vb0 = $('verdict').getBoundingClientRect(), mnL = 1e9, mxR = -1e9;
+    if (!window.__vbx || t < V0+1500){ [vc, vr, vt, vh].forEach(function(e){ var st = e.style.transform; e.style.transform = 'none'; var r = e.getBoundingClientRect(); e.style.transform = st; mnL = Math.min(mnL, r.left-vb0.left); mxR = Math.max(mxR, r.right-vb0.left); }); window.__vbx = [mnL, mxR]; }
+    mnL = window.__vbx[0]; mxR = window.__vbx[1];
+    var bx0 = Math.max(mnL-10, 3); vR.setAttribute('x', bx0.toFixed(1)); vR.setAttribute('width', Math.max(0, mxR+10-bx0).toFixed(1)); vR.setAttribute('height', Math.max(0, vhh-3));
+    vR.setAttribute('stroke-dashoffset', (1-ease(prog(t, V0-700, V0-100))).toFixed(3));
+    var qj = prog(t, 33550, 34050); qfly.style.opacity = 0; bigQ.style.opacity = t >= 34050 ? 1 : 0; bigG.style.opacity = ease(prog(t, 34150, 34450)).toFixed(2);
+    if (qj > 0 && qj < 1){ var qa = rel($('qlab')), qb = rel(bigQ); place(qfly, {x:qa.x-4, y:qa.y-10}, {x:qb.x, y:qb.y+6}, qj, 40); qfly.style.transformOrigin = '0 0'; qfly.style.transform += ' scale('+(.6+.45*ease(qj)).toFixed(2)+')'; }
+    verdict.style.opacity = ease(prog(t, V0-750, V0-650));
     vr.style.opacity = ease(prog(t, V0+150, V0+330));
     vt.style.opacity = ease(prog(t, V0+330, V0+700));
     var hIn = ease(prog(t, V0+700, V0+1000));
@@ -713,6 +961,8 @@
     var sm = ease(prog(t, V0+2500, V0+2800)); $('vrN').setAttribute('opacity', (1-sm).toFixed(2)); $('vrS').setAttribute('opacity', sm.toFixed(2));
     vr.style.transform = 'translateX('+lx.toFixed(1)+'px)'+(lp>0&&lp<1?' rotate('+(Math.sin(lp*Math.PI)*12).toFixed(1)+'deg)':'');
     /* hit: the human flies off right and up, fading */
+    var ap = ease(prog(t, V0+1300, V0+1650)); $('varrp').setAttribute('stroke-dasharray', 80); $('varrp').setAttribute('stroke-dashoffset', (80*(1-ap)).toFixed(1));
+    $('varrh').setAttribute('opacity', ap > .92 ? 1 : 0);
     var hp = prog(t, V0+2000, V0+2500), wb = prog(t, V0+2900, V0+3360);
     if (t < V0+2000){ vh.style.opacity = hIn; vh.style.transform = 'none'; }
     else if (t < V0+2900){ vh.style.opacity = (1-hp).toFixed(2); vh.style.transform = 'translate('+(ease(hp)*70).toFixed(1)+'px,'+(-ease(hp)*24).toFixed(1)+'px) rotate('+(ease(hp)*70).toFixed(1)+'deg)'; }
@@ -727,8 +977,8 @@
     var lp = ease(prog(t,16000,16780)); loopEl.style.opacity = lp > 0 ? 1 : 0;
     loopEl.style.clipPath = 'inset(-20px -8px -4px calc('+((1-lp)*100).toFixed(1)+'% - 8px))';
     var ri = roundAt(t), R = rounds[ri], b;
-    if (t < 6500 || t >= ROUNDS_END + 200) b = 'b'; else b = R.burst ? String(ffNum(t)) : R.b;
-    if (b !== lastB){ bsup.forEach(function(e){ e.textContent = '('+b+')'; }); Object.keys(slots).forEach(function(id){ flyers[id].innerHTML = slots[id].innerHTML; }); lastB = b; }
+    if ((ri === 0 && t < 16000) || t >= ROUNDS_END + 200) b = 'b'; else b = R.burst ? String(ffNum(t)) : R.b;
+    if (b !== lastB){ bsup.forEach(function(e){ e.textContent = '('+b+')'; }); Object.keys(slots).forEach(function(id){ flyers[id].innerHTML = $(FLYC[id]).innerHTML; }); lastB = b; }
     bcount.textContent = (ri >= 1 && t < ROUNDS_END + 200) ? (' · b = '+(R.burst ? ffNum(t) : R.b)) : '';
     var u = (ri >= 1 && R.token) ? prog(t, R.token[0], R.token[1]) : -1;
     if (R.burst) u = ((t - SKIP0) % 110) / 110;
@@ -759,7 +1009,15 @@
     var st = active(t); steps.forEach(function(s,i){ s.classList.toggle('cur', i===st); });
     panel1(t); panel2(t); panel3(t); panel4(t); loopViz(t);
   }
-  function tick(ts){ if (last!==null){ t+=Math.min(ts-last,60); if (t>END) t=0; } last=ts; render(); requestAnimationFrame(tick); }
+  var WARP = [[6450,6450,550],[6500,10500,0.85],[10500,12426,2.5],[12426,13749,3.0],[13749,14250,2.5],[14450,14450,500],[15050,15050,500],[16900+400,16900+1750,0.85],[16900+1750,16900+2149,2.5],[16900+2149,16900+2395,3.0],[16900+2395,16900+2490,2.5],[20000+400,20000+1750,0.85],[20000+1750,20000+2149,2.5],[20000+2149,20000+2395,3.0],[20000+2395,20000+2490,2.5],[33356,33356,550]], END_V = END;
+  /* [a,b,k]: internal a..b plays k times slower; [a,a,d]: a pause of d ms at a */
+  WARP.forEach(function(w){ END_V += w[0]===w[1] ? w[2] : (w[1]-w[0])*(w[2]-1); });
+  function inner(v){ var off = 0; for (var i=0;i<WARP.length;i++){ var w = WARP[i], va = w[0]+off;
+      if (v < va) return v-off;
+      if (w[0]===w[1]){ if (v < va+w[2]) return w[0]; off += w[2]; continue; }
+      var vb = va+(w[1]-w[0])*w[2]; if (v < vb) return w[0]+(v-va)/w[2]; off += (w[1]-w[0])*(w[2]-1); } return v-off; }
+  var vclk = 0;
+  function tick(ts){ if (last!==null){ vclk+=Math.min(ts-last,60); if (vclk>END_V) vclk=0; t = inner(vclk); } last=ts; render(); requestAnimationFrame(tick); }
   render(); if (!reduce) requestAnimationFrame(tick);
 
   var revs = document.querySelectorAll('.reveal');
